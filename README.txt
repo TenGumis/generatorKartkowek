@@ -1,12 +1,12 @@
 Projekt na Programowanie Obiektowe 2015/2016:
 
 > Bartodziej Filip
-> B¹k Pawe³
+> BÄ…k PaweÅ‚
 > Pabian Mateusz
 
-Program generuj¹cy rózne zadania polegaj¹ce na t³umaczeniu lub ³¹czeniu w pary s³ówek w jêyku obcym z wczeœniej przygotowanej bazy danych.
+Program generujÄ…cy rÃ³Å¼ne zadania polegajÄ…ce na tÅ‚umaczeniu lub Å‚Ä…czeniu w pary sÅ‚Ã³wek w jÄ™zyku obcym z wczeÅ›niej przygotowanej bazy danych.
 
-Wymagania wstêpne:
+Wymagania wstÄ™pne:
 
-- £adowanie bazy s³ówek z pliku
-- Tworzenie zadañ polegaj¹cych na t³umaczeniu ze sprawdzaniem wyniku
+- Åadowanie bazy sÅ‚Ã³wek z pliku
+- Tworzenie zadaÅ„ polegajÄ…cych na tÅ‚umaczeniu ze sprawdzaniem wyniku
