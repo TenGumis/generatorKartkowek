@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Stack;
 
 public class Main extends Application {
@@ -86,6 +88,8 @@ public class Main extends Application {
     void databaseInitialization(){
         mainDatabase=new MainDatabase();
         try {
+            if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
+                Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             BufferedReader br = new BufferedReader(
                     new FileReader("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             String line = br.readLine();

@@ -6,6 +6,10 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# databases by TenGumis
+importedDatabases.txt
+
+
 # Package Files #
 *.jar
 *.war
