@@ -42,11 +42,14 @@ public class BasicGame implements Game {
         window.setTitle("Basic Game");
         window.initModality(Modality.APPLICATION_MODAL);
 
+        //Grid Layout
 
-        // VBOX Layout
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(10, 10, 10, 10));
-        vbox.setAlignment(Pos.CENTER);
+        GridPane grid = new GridPane();
+        grid.setPadding(new Insets(10, 10, 10, 10));
+        grid.setVgap(10);
+        grid.setHgap(10);
+        grid.setAlignment(Pos.CENTER);
+
 
         // getting values for the game from database
         Map<String, String> testComponets = new HashMap<>();
@@ -61,6 +64,8 @@ public class BasicGame implements Game {
             k++;
         }
 
+        int row=0;
+
         for (Pair<String, String > pair : pairsFromDB) {
             String s1, s2;
             if (rG.nextBoolean()) {
@@ -71,13 +76,12 @@ public class BasicGame implements Game {
             }
 
             Label label = new Label(s1);
+            GridPane.setConstraints(label, 0, row);
             TextField textField = new TextField();
+            GridPane.setConstraints(textField, 1, row++);
+            grid.getChildren().addAll(label, textField);
             matchings.add(new GamePair(label, textField));
             testComponets.put(s1, s2); // first value - translate from, second translate to
-            HBox hbox = new HBox(10);
-            hbox.getChildren().addAll(label, textField);
-            hbox.setAlignment(Pos.CENTER);
-            vbox.getChildren().add(hbox);
         }
         //
 
@@ -95,7 +99,7 @@ public class BasicGame implements Game {
                     gp.textField.setStyle("-fx-text-fill: red");
 
             }
-            vbox.getChildren().remove(submit);
+            grid.getChildren().remove(submit);
 
             // Result label
             Label labelOfResult = new Label();
@@ -115,15 +119,20 @@ public class BasicGame implements Game {
             HBox resultHBox= new HBox(20);
             resultHBox.getChildren().addAll(labelOfResult, resultIcon);
             resultHBox.setAlignment(Pos.CENTER);
-            vbox.getChildren().add(resultHBox);
+            GridPane.setConstraints(resultHBox, 0, wordsQuantity+1, 2, 1);
+            GridPane.setHalignment(resultHBox, HPos.CENTER);
+            grid.getChildren().add(resultHBox);
 
             // Back to gameMenu button  --- needs to be properly bound, to resize the window / needs scroll implementation
             Button backToGameMenu = new Button("Back to Game Menu");
             backToGameMenu.setOnAction(event1 -> window.close());
-            vbox.getChildren().add(backToGameMenu);
+            GridPane.setConstraints(backToGameMenu, 0, wordsQuantity+2, 2, 1);
+            GridPane.setHalignment(backToGameMenu, HPos.CENTER);
+            grid.getChildren().add(backToGameMenu);
         });
-
-        vbox.getChildren().add(submit);
+        GridPane.setConstraints(submit, 0, row, 2, 1);
+        GridPane.setHalignment(submit, HPos.CENTER);
+        grid.getChildren().add(submit);
 
 
         //Quit button
@@ -134,7 +143,7 @@ public class BasicGame implements Game {
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         scrollPane.setPrefHeight(300);
-        scrollPane.setContent(vbox);
+        scrollPane.setContent(grid);
         scrollPane.setFitToWidth(true);
 
         // Scene

@@ -16,10 +16,14 @@ import java.util.*;
  * Created by filip on 5/31/16.
  */
 public class GameCreator {
-    Scene myScene;
-    MainDatabase db;
-    List<String> selectedCategories;
-    static Map<String, Game> availableGames = new HashMap<>();
+    private Scene myScene;
+    private MainDatabase db;
+    private List<String> selectedCategories;
+    private static Map<String, Game> availableGames = new HashMap<>();
+    List<CheckMenuItem> listOfCategories = new ArrayList<>();
+
+    private Menu categoryChoice = new Menu("Choose categories");
+    private MenuBar mb = new MenuBar();
 
     static {
         availableGames.put("BasicGame", new BasicGame());
@@ -45,24 +49,7 @@ public class GameCreator {
 
 
         // Category choice
-        Menu categoryChoice = new Menu("Choose categories");
-        List<CheckMenuItem> listOfCategories = new ArrayList<>();
-        for (String s : db.getCategories()) {
-            CheckMenuItem checkMenuItem = new CheckMenuItem(s);
-            checkMenuItem.setOnAction(event -> {
-                if (checkMenuItem.isSelected())
-                    selectedCategories.add(s);
-                else
-                    selectedCategories.remove(s);
-            });
-            categoryChoice.getItems().add(checkMenuItem);
-            listOfCategories.add(checkMenuItem);
-        }
-
-        //MenuBar mb = new MenuBar();
-        MenuBar mb = new MenuBar();
-        mb.setMaxWidth(156);
-        mb.getMenus().add(categoryChoice);
+        this.refreshCategories();
 
 
         // Number of words to use in the game
@@ -113,6 +100,28 @@ public class GameCreator {
         //Scene
         myScene=new Scene(borderPane, 400, 400);
 
+    }
+
+
+    public void refreshCategories() {
+        listOfCategories.clear();
+        categoryChoice.getItems().clear();
+        for (String s : db.getCategories()) {
+            CheckMenuItem checkMenuItem = new CheckMenuItem(s);
+            checkMenuItem.setOnAction(event -> {
+                if (checkMenuItem.isSelected())
+                    selectedCategories.add(s);
+                else
+                    selectedCategories.remove(s);
+            });
+            categoryChoice.getItems().add(checkMenuItem);
+            listOfCategories.add(checkMenuItem);
+        }
+
+        //MenuBar mb = new MenuBar();
+        mb = new MenuBar();
+        mb.setMaxWidth(156);
+        mb.getMenus().add(categoryChoice);
     }
 
     public Scene getScene() {

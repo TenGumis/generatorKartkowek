@@ -14,7 +14,8 @@ import java.util.Stack;
 public class Main extends Application {
 
     private Stage window;
-    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene, gameCreation;
+    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene;
+    private GameCreator gameCreation;
     private Stack<Scene> sceneStack=new Stack<>();
     private MainDatabase mainDatabase=null;
     @Override
@@ -27,7 +28,7 @@ public class Main extends Application {
         loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
-        gameCreation= new GameCreator(window, sceneStack, mainDatabase).getScene();
+        gameCreation= new GameCreator(window, sceneStack, mainDatabase);
 
         BorderPane mainMenuLayout=new BorderPane();
         VBox menuButtons=new VBox();
@@ -48,8 +49,9 @@ public class Main extends Application {
 
         Button startTestButton=new Button("Make a Test");
         startTestButton.setOnAction(e-> {
-            sceneStack.push(gameCreation);
-            window.setScene(gameCreation);
+            gameCreation.refreshCategories();
+            sceneStack.push(gameCreation.getScene());
+            window.setScene(gameCreation.getScene());
         });
         startTestButton.setMaxWidth(130);
 
