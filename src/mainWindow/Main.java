@@ -6,6 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Stack;
 
 public class Main extends Application {
@@ -13,12 +19,15 @@ public class Main extends Application {
     private Stage window;
     private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene;
     private Stack<Scene> sceneStack=new Stack<>();
-
+    private MainDatabase mainDatabase=null;
     @Override
     public void start(Stage primaryStage) {
+
+        databaseInitialization();
+
         window=primaryStage;
         aboutScene=new AboutScene(window,sceneStack).getScene();
-        loadDatabaseScene=new LoadDatabaseScene(window,sceneStack).getScene();
+        loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
 
@@ -71,6 +80,23 @@ public class Main extends Application {
         window.setTitle("Generator kartkówek");
         window.setScene(mainMenuScene);
         window.show();
+    }
+
+    void databaseInitialization(){
+        mainDatabase=new MainDatabase();
+        try {
+            BufferedReader br = new BufferedReader(
+                    new FileReader("src\\databases\\importedDatabases.txt"));
+            String line = br.readLine();
+            while (line != null) {
+                mainDatabase.insert(line,"src\\databases\\" + line + ".txt");
+                line = br.readLine();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

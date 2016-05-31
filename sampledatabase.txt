@@ -1,2 +1,0 @@
-pies:dog
-kot:cat
