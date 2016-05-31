@@ -25,7 +25,7 @@ public class Main extends Application {
 
         window=primaryStage;
         aboutScene=new AboutScene(window,sceneStack).getScene();
-        loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
+        //loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
         gameCreation= new GameCreator(window, sceneStack, mainDatabase);
@@ -35,6 +35,7 @@ public class Main extends Application {
 
         Button loadDatabseButton=new Button("Load Database");
         loadDatabseButton.setOnAction(e-> {
+            loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
             sceneStack.push(loadDatabaseScene);
             window.setScene(loadDatabaseScene);
         });

@@ -11,7 +11,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.Stack;
 
@@ -57,13 +56,13 @@ public class LoadDatabaseScene {
                 System.out.println(databaseName.getText());
                 try {
                     Files.copy(Paths.get(selectedFile.getAbsolutePath()),
-                            Paths.get("src\\databases\\" + databaseName.getText() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
+                            Paths.get("src"+ File.separator+"databases"+ File.separator + databaseName.getText() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                mainDatabase.insert(databaseName.getText(),"src\\databases\\" + databaseName.getText() + ".txt");
+                mainDatabase.insert(databaseName.getText(),"src"+ File.separator+"databases"+ File.separator + databaseName.getText() + ".txt");
                 try {
-                    Files.write(Paths.get("src\\databases\\importedDatabases.txt"), databaseName.getText().getBytes(), StandardOpenOption.APPEND);
+                    Files.write(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"), (databaseName.getText()+System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
                 }catch (IOException e2) {
                     e2.printStackTrace();
                 }
