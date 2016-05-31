@@ -1,4 +1,4 @@
-package gameMenu;
+package mainWindow;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

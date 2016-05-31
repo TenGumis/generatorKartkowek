@@ -1,0 +1,4 @@
+Pokoje
+living room:salon
+sleeping room:sypialnia
+kitchen:kuchnia

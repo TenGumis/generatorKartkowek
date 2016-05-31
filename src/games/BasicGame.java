@@ -16,52 +16,74 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Material;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
+import mainWindow.MainDatabase;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by filip on 5/21/16.
  */
 public class BasicGame implements Game {
+    final static private Random rG = new Random();
     public BasicGame() {}
 
-    public void play(int wordsQuantity) {
+    public void play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
 
         Map<String, String> gameContent = new HashMap<>();
         Stage window = new Stage();
         window.setTitle("Basic Game");
         window.initModality(Modality.APPLICATION_MODAL);
 
-        // Grid Layout
-        GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10, 10, 10, 10));
-        grid.setVgap(8);
-        grid.setHgap(10);
+
+        // VBOX Layout
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
+        vbox.setAlignment(Pos.CENTER);
 
         // getting values for the game from database
         Map<String, String> testComponets = new HashMap<>();
         List<GamePair> matchings = new ArrayList<>();
-        for (int i=0; i<wordsQuantity; i++) {
-            Label label = new Label(""+i);
-            grid.add(label, 0, i);
+        List<Pair<String , String> > pairsFromDB = new ArrayList<>();
+        int numberOfCategories = categories.size();
+        int k=1;
+        for (String s : categories) {
+            for (Pair<String, String> pair :
+                    db.getSetOfElements(s, (k*wordsQuantity)/numberOfCategories-((k-1)*wordsQuantity)/numberOfCategories))
+                pairsFromDB.add(pair);
+            k++;
+        }
+
+        for (Pair<String, String > pair : pairsFromDB) {
+            String s1, s2;
+            if (rG.nextBoolean()) {
+                s1=pair.getKey(); s2=pair.getValue();
+            }
+            else {
+                s1=pair.getValue(); s2=pair.getKey();
+            }
+
+            Label label = new Label(s1);
             TextField textField = new TextField();
-            grid.add(textField, 1, i);
             matchings.add(new GamePair(label, textField));
-            testComponets.put(""+i, ""+i*10); // first value - translate from, second translate to
+            testComponets.put(s1, s2); // first value - translate from, second translate to
+            HBox hbox = new HBox(10);
+            hbox.getChildren().addAll(label, textField);
+            hbox.setAlignment(Pos.CENTER);
+            vbox.getChildren().add(hbox);
         }
         //
 
         // Submit button
         Button submit = new Button("Submit");
+        // Submit action
         submit.setOnAction(event -> {
             int result=0;
             for (GamePair gp : matchings) {
@@ -73,7 +95,7 @@ public class BasicGame implements Game {
                     gp.textField.setStyle("-fx-text-fill: red");
 
             }
-            grid.getChildren().remove(submit);
+            vbox.getChildren().remove(submit);
 
             // Result label
             Label labelOfResult = new Label();
@@ -90,50 +112,33 @@ public class BasicGame implements Game {
                 resultIcon = new ImageView(new Image(BasicGame.class.getResourceAsStream("smallnotok.png")));
 
             // Result HBox
-            HBox resultHBox= new HBox();
+            HBox resultHBox= new HBox(20);
             resultHBox.getChildren().addAll(labelOfResult, resultIcon);
-            resultHBox.setSpacing(20);
             resultHBox.setAlignment(Pos.CENTER);
-            GridPane.setHalignment(resultHBox, HPos.CENTER);
-            grid.add(resultHBox, 0, wordsQuantity+2, 2, 1);
+            vbox.getChildren().add(resultHBox);
 
-            // Back to GameMenu button  --- needs to be properly bound, to resize the window / needs scroll implementation
-            Button backToGameMenu = new Button("Back to GameMenu");
+            // Back to gameMenu button  --- needs to be properly bound, to resize the window / needs scroll implementation
+            Button backToGameMenu = new Button("Back to Game Menu");
             backToGameMenu.setOnAction(event1 -> window.close());
-            GridPane.setHalignment(backToGameMenu, HPos.CENTER);
-            grid.add(backToGameMenu, 0, wordsQuantity+3, 2, 1);
+            vbox.getChildren().add(backToGameMenu);
         });
-        GridPane.setHalignment(submit, HPos.CENTER);
-        grid.add(submit, 0, wordsQuantity+1, 2, 1);
+
+        vbox.getChildren().add(submit);
+
 
         //Quit button
         Button quit = new Button("Quit");
         quit.setOnAction(event -> window.close());
 
-        // Group
-        Group root = new Group();
+        // ScrollPane
+        ScrollPane scrollPane = new ScrollPane();
+        VBox.setVgrow(scrollPane, Priority.ALWAYS);
+        scrollPane.setPrefHeight(300);
+        scrollPane.setContent(vbox);
+        scrollPane.setFitToWidth(true);
 
         // Scene
-        Scene scene = new Scene(root, 250, 300);
-
-        // Scroll Bar
-        ScrollBar sb = new ScrollBar();
-        sb.setLayoutX(scene.getWidth()-sb.getWidth());
-        sb.setMin(0);
-        sb.setMax(30 * wordsQuantity);
-        sb.setPrefHeight(300);
-        sb.setOrientation(Orientation.VERTICAL);
-
-
-        sb.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                                Number old_val, Number new_val) {
-                grid.setLayoutY(-new_val.doubleValue());
-            }
-        });
-        grid.getChildren().add(sb);
-
-        root.getChildren().addAll(grid, sb);
+        Scene scene = new Scene(scrollPane);
 
         window.setScene(scene);
         window.showAndWait();

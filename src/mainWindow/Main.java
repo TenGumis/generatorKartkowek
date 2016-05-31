@@ -8,16 +8,13 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Stack;
 
 public class Main extends Application {
 
     private Stage window;
-    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene;
+    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene, gameCreation;
     private Stack<Scene> sceneStack=new Stack<>();
     private MainDatabase mainDatabase=null;
     @Override
@@ -30,6 +27,7 @@ public class Main extends Application {
         loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
+        gameCreation= new GameCreator(window, sceneStack, mainDatabase).getScene();
 
         BorderPane mainMenuLayout=new BorderPane();
         VBox menuButtons=new VBox();
@@ -48,10 +46,10 @@ public class Main extends Application {
         });
         newDatabaseButton.setMaxWidth(130);
 
-        Button startTestButton=new Button("Start Test");
+        Button startTestButton=new Button("Make a Test");
         startTestButton.setOnAction(e-> {
-            sceneStack.push(testScene);
-            window.setScene(testScene);
+            sceneStack.push(gameCreation);
+            window.setScene(gameCreation);
         });
         startTestButton.setMaxWidth(130);
 
@@ -86,10 +84,10 @@ public class Main extends Application {
         mainDatabase=new MainDatabase();
         try {
             BufferedReader br = new BufferedReader(
-                    new FileReader("src\\databases\\importedDatabases.txt"));
+                    new FileReader("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             String line = br.readLine();
             while (line != null) {
-                mainDatabase.insert(line,"src\\databases\\" + line + ".txt");
+                mainDatabase.insert(line,"src"+ File.separator+ "databases" + File.separator+ line + ".txt");
                 line = br.readLine();
             }
         } catch (FileNotFoundException e) {
