@@ -6,6 +6,7 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+
 # Package Files #
 *.jar
 *.war
@@ -121,3 +122,6 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+
+# databases by TenGumis
+/src/databases/importedDatabases.txt

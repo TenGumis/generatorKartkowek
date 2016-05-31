@@ -62,6 +62,8 @@ public class LoadDatabaseScene {
                 }
                 mainDatabase.insert(databaseName.getText(),"src"+ File.separator+"databases"+ File.separator + databaseName.getText() + ".txt");
                 try {
+                    if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
+                        Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
                     Files.write(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"), (databaseName.getText()+System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
                 }catch (IOException e2) {
                     e2.printStackTrace();
