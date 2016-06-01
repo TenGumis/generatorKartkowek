@@ -137,7 +137,9 @@ public class BasicGame implements Game {
             grid.getChildren().add(backToGameMenu);
 
             ScrollPane sp = new ScrollPane(grid);
+            VBox.setVgrow(sp, Priority.ALWAYS);
             sp.setPrefHeight(300);
+            sp.setPrefWidth(400);
             sp.setFitToWidth(true);
             scene = new Scene(sp);
             window.setScene(scene);
@@ -154,10 +156,10 @@ public class BasicGame implements Game {
         // ScrollPane
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setPrefHeight(500);
+        scrollPane.setPrefHeight(300);
         scrollPane.setPrefWidth(400);
         scrollPane.setContent(grid);
-        //scrollPane.setFitToWidth(true);
+        scrollPane.setFitToWidth(true);
 
         // Scene
         Scene scene = new Scene(scrollPane);
