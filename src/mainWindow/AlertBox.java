@@ -1,5 +1,6 @@
 package mainWindow;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -25,11 +26,13 @@ public class AlertBox {
 
         // VBox layout
         VBox vbox = new VBox(8);
+        vbox.setPadding(new Insets(10, 10, 10, 10));
         vbox.getChildren().addAll(label, close);
         vbox.setAlignment(Pos.CENTER);
 
         Scene scene = new Scene(vbox);
         window.setScene(scene);
+        window.setTitle("ERROR");
         window.showAndWait();
     }
 }

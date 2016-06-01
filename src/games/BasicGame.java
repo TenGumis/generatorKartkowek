@@ -33,6 +33,8 @@ import java.util.List;
  */
 public class BasicGame implements Game {
     final static private Random rG = new Random();
+    private Scene scene;
+
     public BasicGame() {}
 
     public void play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
@@ -76,6 +78,7 @@ public class BasicGame implements Game {
             }
 
             Label label = new Label(s1);
+            GridPane.setHalignment(label, HPos.CENTER);
             GridPane.setConstraints(label, 0, row);
             TextField textField = new TextField();
             GridPane.setConstraints(textField, 1, row++);
@@ -95,9 +98,12 @@ public class BasicGame implements Game {
                     result++;
                     gp.textField.setStyle("-fx-text-fill: green");
                 }
-                else
+                else {
                     gp.textField.setStyle("-fx-text-fill: red");
-
+                    Tooltip tooltip = new Tooltip(testComponets.get(gp.label.getText()));
+                    Tooltip.install(gp.textField, tooltip);
+                    gp.textField.setTooltip(tooltip);
+                }
             }
             grid.getChildren().remove(submit);
 
@@ -129,6 +135,12 @@ public class BasicGame implements Game {
             GridPane.setConstraints(backToGameMenu, 0, wordsQuantity+2, 2, 1);
             GridPane.setHalignment(backToGameMenu, HPos.CENTER);
             grid.getChildren().add(backToGameMenu);
+
+            ScrollPane sp = new ScrollPane(grid);
+            sp.setPrefHeight(300);
+            sp.setFitToWidth(true);
+            scene = new Scene(sp);
+            window.setScene(scene);
         });
         GridPane.setConstraints(submit, 0, row, 2, 1);
         GridPane.setHalignment(submit, HPos.CENTER);

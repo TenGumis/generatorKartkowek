@@ -63,15 +63,21 @@ public class GameCreator {
         startGame.setOnAction(event -> {
             try{
                 int g =new Integer(numberOfWords.getText());
-                if (g<1) throw new Exception();
+                if (g<1)
+                    throw new Exception("Number of words must be of positive integer type.");
                 List<String> categoriesToPlay = new ArrayList<String>();
                 for (String s : selectedCategories)
                     categoriesToPlay.add(s);
+                if (selectedCategories.isEmpty())
+                    throw new Exception("At least one category of words must be selected.");
                 availableGames.get(chooseAGame.getValue()).play(g, categoriesToPlay, db);
                 for (CheckMenuItem mi : listOfCategories)
                     mi.setSelected(false);
-            } catch (Exception e) {
+                numberOfWords.setText("");
+            } catch (NumberFormatException nfe) {
                 AlertBox.display("Number of words must be of positive integer type.");
+            } catch (Exception e) {
+                AlertBox.display(e.getMessage());
             }
         });
 
