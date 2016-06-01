@@ -17,11 +17,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javax.swing.text.View;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 
@@ -59,6 +61,7 @@ public class CreatingNewDatabaseScene {
             addFields(grid,row);
             GridPane.setConstraints(addFieldsButton, 0, row+1, 2, 1);
             GridPane.setConstraints(submit, 0, row+2, 2, 1);
+            GridPane.setConstraints(back, 0, row+3, 2, 1);
             row++;
         });
         GridPane.setConstraints(addFieldsButton, 0, row+1, 2, 1);
@@ -79,6 +82,13 @@ public class CreatingNewDatabaseScene {
             if(!Files.exists(file)) {
                 try {
                     Files.write(file,writeLines, Charset.defaultCharset());
+
+                    if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
+                        Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
+                    Files.write(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"), (databaseName+System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+
+                    // dodawanie do hashmapy
+
                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                     alert.setTitle("Database created");
                     alert.setContentText("Database created successfully.");
