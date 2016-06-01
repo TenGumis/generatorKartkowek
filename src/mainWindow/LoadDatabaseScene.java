@@ -105,6 +105,7 @@ public class LoadDatabaseScene {
                 databaseName.setDisable(false);
             }
         });
+
         loadDatabaseButton.setMaxWidth(180);
 
 
