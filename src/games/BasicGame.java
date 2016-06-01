@@ -142,9 +142,10 @@ public class BasicGame implements Game {
         // ScrollPane
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(500);
+        scrollPane.setPrefWidth(400);
         scrollPane.setContent(grid);
-        scrollPane.setFitToWidth(true);
+        //scrollPane.setFitToWidth(true);
 
         // Scene
         Scene scene = new Scene(scrollPane);
