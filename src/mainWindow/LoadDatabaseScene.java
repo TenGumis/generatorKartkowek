@@ -102,6 +102,7 @@ public class LoadDatabaseScene {
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
+                databaseName.setDisable(false);
             }
         });
         loadDatabaseButton.setMaxWidth(180);

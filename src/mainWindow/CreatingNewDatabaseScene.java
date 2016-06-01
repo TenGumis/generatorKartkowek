@@ -83,10 +83,7 @@ public class CreatingNewDatabaseScene {
                     alert.setTitle("Database created");
                     alert.setContentText("Database created successfully.");
                     alert.showAndWait();
-                    stackScene.pop();
-                    window.setScene(stackScene.peek());
-                    stackScene.pop();
-                    window.setScene(stackScene.peek());
+                    window.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -111,8 +108,7 @@ public class CreatingNewDatabaseScene {
         GridPane.setConstraints(back, 0, row+3, 2, 1);
         GridPane.setHalignment(back, HPos.CENTER);
         back.setOnAction(event -> {
-            stackScene.pop();
-            window.setScene(stackScene.peek());
+            window.close();
         });
         grid.getChildren().add(back);
 
