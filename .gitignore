@@ -121,3 +121,6 @@ nbdist/
 nbactions.xml
 nb-configuration.xml
 .nb-gradle/
+
+# databases by TenGumis
+/src/databases/importedDatabases.txt

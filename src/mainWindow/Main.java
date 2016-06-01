@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Stack;
 
 public class Main extends Application {
@@ -25,7 +27,7 @@ public class Main extends Application {
 
         window=primaryStage;
         aboutScene=new AboutScene(window,sceneStack).getScene();
-        loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
+        //loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
         gameCreation= new GameCreator(window, sceneStack, mainDatabase);
@@ -35,6 +37,7 @@ public class Main extends Application {
 
         Button loadDatabseButton=new Button("Load Database");
         loadDatabseButton.setOnAction(e-> {
+            loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
             sceneStack.push(loadDatabaseScene);
             window.setScene(loadDatabaseScene);
         });
@@ -85,6 +88,8 @@ public class Main extends Application {
     void databaseInitialization(){
         mainDatabase=new MainDatabase();
         try {
+            if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
+                Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             BufferedReader br = new BufferedReader(
                     new FileReader("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             String line = br.readLine();
