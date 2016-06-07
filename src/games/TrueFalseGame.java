@@ -4,10 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -26,7 +23,7 @@ public class TrueFalseGame implements Game {
     private Scene scene;
     Map<String, String> gameContent;
     Map<String, String> testComponets;
-    List<TrueFalseGame.GamePair> matchings;
+    List<TrueFalseGame.GameItem> matchings;
     private int wordsQuantity;
 
     public TrueFalseGame() {}
@@ -61,21 +58,26 @@ public class TrueFalseGame implements Game {
 
         for (Pair<String, String > pair : pairsFromDB) {
             String s1, s2;
-            if (rG.nextBoolean()) {
-                s1=pair.getKey(); s2=pair.getValue();
-            }
-            else {
-                s1=pair.getValue(); s2=pair.getKey();
-            }
+            s1=pair.getKey();
+            s2=pair.getValue();
+
 
             Label label1 = new Label(s1);
             GridPane.setHalignment(label1, HPos.CENTER);
             GridPane.setConstraints(label1, 0, row);
             Label label2 = new Label(s2);
             GridPane.setHalignment(label2, HPos.CENTER);
-            GridPane.setConstraints(label2, 1, row++);
-            grid.getChildren().addAll(label1, label2);
-            matchings.add(new TrueFalseGame.GamePair(label1, label2));
+            GridPane.setConstraints(label2, 1, row);
+            row++;
+            CheckBox trueBox=new CheckBox("true");
+            CheckBox falseBox=new CheckBox("false");
+            GridPane.setConstraints(trueBox,0,row);
+            GridPane.setHalignment(trueBox, HPos.CENTER);
+            GridPane.setConstraints(falseBox,1,row);
+            GridPane.setHalignment(falseBox, HPos.CENTER);
+            row++;
+            grid.getChildren().addAll(label1, label2,trueBox,falseBox);
+            matchings.add(new TrueFalseGame.GameItem(label1, label2,trueBox,falseBox));
             testComponets.put(s1, s2); // first value - translate from, second translate to
         }
 
@@ -98,7 +100,7 @@ public class TrueFalseGame implements Game {
 
     public int score() {
         int result=0;
-        for (TrueFalseGame.GamePair gp : matchings) {
+        for (TrueFalseGame.GameItem gp : matchings) {
             if (testComponets.get(gp.label1.getText()).equals(gp.label2.getText())) {
                 result++;
                 gp.label2.setStyle("-fx-text-fill: green");
@@ -121,12 +123,23 @@ public class TrueFalseGame implements Game {
         return scene;
     }
 
-    static class GamePair {
+    static class GameItem {
         Label label1;
         Label label2;
-        GamePair() {}
-        GamePair(Label l1, Label l2) {
-            label1 = l1; label2 = l2;
+        CheckBox checkBox1;
+        CheckBox checkBox2;
+        GameItem() {}
+        GameItem(Label l1, Label l2,CheckBox a,CheckBox b) {
+            label1 = l1;
+            label2 = l2;
+            checkBox1=a;
+            checkBox2=b;
+            checkBox1.setOnAction(e->{
+                if(checkBox2.isSelected() && checkBox1.isSelected()) checkBox2.setSelected(false);
+            });
+            checkBox2.setOnAction(e->{
+                if(checkBox2.isSelected() && checkBox1.isSelected()) checkBox1.setSelected(false);
+            });
         }
     }
 }
