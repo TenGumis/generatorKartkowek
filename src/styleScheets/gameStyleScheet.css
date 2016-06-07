@@ -1,0 +1,43 @@
+.root {
+    -fx-background-image: url("../img/hexellence.png");
+    -fx-font-size: 11px;
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-font-family: "Calibri";
+    -fx-background-color: #4CAF50;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-max-width: 200px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 10px;
+    -fx-border-radius: 5px;
+    -fx-cursor: pointer;
+    -fx-border: 1px;
+}
+
+.label{
+    -fx-text-fill: #323232;
+    -fx-font-size: 12px;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#4CAF50, #3c8c40);
+    -fx-cursor: hand;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+    -fx-max-width: 200px;
+
+}
+
+.text-input {
+    -fx-text-fill: #4f9753;
+}
+
+
