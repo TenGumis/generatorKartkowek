@@ -34,15 +34,16 @@ import java.util.List;
 public class BasicGame implements Game {
     final static private Random rG = new Random();
     private Scene scene;
+    Map<String, String> gameContent;
+    Map<String, String> testComponets;
+    List<GamePair> matchings;
+    private int wordsQuantity;
 
     public BasicGame() {}
 
-    public void play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
-
-        Map<String, String> gameContent = new HashMap<>();
-        Stage window = new Stage();
-        window.setTitle("Basic Game");
-        window.initModality(Modality.APPLICATION_MODAL);
+    public Scene play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
+        this.wordsQuantity= wordsQuantity;
+        gameContent = new HashMap<>();
 
         //Grid Layout
 
@@ -54,8 +55,8 @@ public class BasicGame implements Game {
 
 
         // getting values for the game from database
-        Map<String, String> testComponets = new HashMap<>();
-        List<GamePair> matchings = new ArrayList<>();
+        testComponets = new HashMap<>();
+        matchings = new ArrayList<>();
         List<Pair<String , String> > pairsFromDB = new ArrayList<>();
         int numberOfCategories = categories.size();
         int k=1;
@@ -86,88 +87,46 @@ public class BasicGame implements Game {
             matchings.add(new GamePair(label, textField));
             testComponets.put(s1, s2); // first value - translate from, second translate to
         }
-        //
 
-        // Submit button
-        Button submit = new Button("Submit");
-        // Submit action
-        submit.setOnAction(event -> {
-            int result=0;
-            for (GamePair gp : matchings) {
-                if (testComponets.get(gp.label.getText()).equals(gp.textField.getText())) {
-                    result++;
-                    gp.textField.setStyle("-fx-text-fill: green");
-                }
-                else {
-                    gp.textField.setStyle("-fx-text-fill: red");
-                    Tooltip tooltip = new Tooltip(testComponets.get(gp.label.getText()));
-                    Tooltip.install(gp.textField, tooltip);
-                    gp.textField.setTooltip(tooltip);
-                }
-            }
-            grid.getChildren().remove(submit);
-
-            // Result label
-            Label labelOfResult = new Label();
-            labelOfResult.setText(""+result+"/"+wordsQuantity);
-            labelOfResult.setTextFill(Color.RED);
-            labelOfResult.setStyle("-fx-text-fill: lightseagreen; -fx-font-size: 20;");
-
-            // Result icon
-            double grade = (double)result / (double)wordsQuantity;
-            ImageView resultIcon;
-            if (grade>0.75)
-                resultIcon = new ImageView(new Image(BasicGame.class.getResourceAsStream("smallok.png")));
-            else
-                resultIcon = new ImageView(new Image(BasicGame.class.getResourceAsStream("smallnotok.png")));
-
-            // Result HBox
-            HBox resultHBox= new HBox(20);
-            resultHBox.getChildren().addAll(labelOfResult, resultIcon);
-            resultHBox.setAlignment(Pos.CENTER);
-            GridPane.setConstraints(resultHBox, 0, wordsQuantity+1, 2, 1);
-            GridPane.setHalignment(resultHBox, HPos.CENTER);
-            grid.getChildren().add(resultHBox);
-
-            // Back to gameMenu button  --- needs to be properly bound, to resize the window / needs scroll implementation
-            Button backToGameMenu = new Button("Back to Game Menu");
-            backToGameMenu.setOnAction(event1 -> window.close());
-            GridPane.setConstraints(backToGameMenu, 0, wordsQuantity+2, 2, 1);
-            GridPane.setHalignment(backToGameMenu, HPos.CENTER);
-            grid.getChildren().add(backToGameMenu);
-
-            ScrollPane sp = new ScrollPane(grid);
-            VBox.setVgrow(sp, Priority.ALWAYS);
-            sp.setPrefHeight(300);
-            sp.setPrefWidth(400);
-            sp.setFitToWidth(true);
-            scene = new Scene(sp);
-            window.setScene(scene);
-        });
-        GridPane.setConstraints(submit, 0, row, 2, 1);
-        GridPane.setHalignment(submit, HPos.CENTER);
-        grid.getChildren().add(submit);
-
-
-        //Quit button
-        Button quit = new Button("Quit");
-        quit.setOnAction(event -> window.close());
 
         // ScrollPane
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setPrefHeight(300);
+        scrollPane.setPrefHeight(400);
         scrollPane.setPrefWidth(400);
         scrollPane.setContent(grid);
         scrollPane.setFitToWidth(true);
 
         // Scene
         Scene scene = new Scene(scrollPane);
-
-        window.setScene(scene);
-        window.showAndWait();
+        return scene;
     }
 
+
+    public int score() {
+        int result=0;
+        for (GamePair gp : matchings) {
+            if (testComponets.get(gp.label.getText()).equals(gp.textField.getText())) {
+                result++;
+                gp.textField.setStyle("-fx-text-fill: green");
+            }
+            else {
+                gp.textField.setStyle("-fx-text-fill: red");
+                Tooltip tooltip = new Tooltip(testComponets.get(gp.label.getText()));
+                Tooltip.install(gp.textField, tooltip);
+                gp.textField.setTooltip(tooltip);
+            }
+        }
+        return result;
+    }
+
+    public int getWordsQuantity() {
+        return wordsQuantity;
+    }
+
+    public Scene getScene() {
+        return scene;
+    }
 
     static class GamePair {
         Label label;

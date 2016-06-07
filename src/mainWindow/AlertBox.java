@@ -23,6 +23,7 @@ public class AlertBox {
 
         // Label
         Label label = new Label(message);
+        label.setStyle("-fx-text-fill: firebrick; -fx-font-size: 15; -fx-font-weight: bold");
 
         // VBox layout
         VBox vbox = new VBox(8);

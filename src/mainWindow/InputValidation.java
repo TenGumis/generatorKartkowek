@@ -10,9 +10,12 @@ package mainWindow;
 public class InputValidation {
     private InputValidation() { };
 
-    static public void validate(InputValidationInterface function, String message) {
-        if (function.test()) {
+    static public boolean validate(InputValidationInterface function, String message) {
+        // Returns true if validation was successful
+        if (!function.test()) {
             AlertBox.display(message);
+            return false;
         }
+        return true;
     }
 }
