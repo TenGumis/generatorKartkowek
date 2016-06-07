@@ -116,6 +116,7 @@ public class LoadDatabaseScene {
         loadDatabaseLayout.setCenter(loadDatabasePanel);
 
         loadDatabaseScene=new Scene(loadDatabaseLayout,400,400);
+        loadDatabaseScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
     }
 
     private void showAlertBadPath() {

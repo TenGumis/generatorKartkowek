@@ -1,0 +1,22 @@
+.root {
+    -fx-background-image: url("../img/hexellence.png");
+    -fx-font-size: 11px;
+}
+
+.button{
+    -fx-text-fill: white;
+    -fx-font-family: "Arial Narrow";
+    -fx-background-color: #4CAF50;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-max-width: 200px;
+    -fx-font-size: 15px;
+    -fx-padding: 10px 10px;
+    -fx-border-radius: 5px;
+    -fx-cursor: pointer;
+    -fx-border: 1px;
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(#4CAF50, #3c8c40);
+    -fx-cursor: hand;
+}

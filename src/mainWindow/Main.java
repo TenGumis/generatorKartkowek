@@ -28,7 +28,6 @@ public class Main extends Application {
 
         window=primaryStage;
         aboutScene=new AboutScene(window,sceneStack).getScene();
-        //loadDatabaseScene=new LoadDatabaseScene(window,sceneStack,mainDatabase).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
         //gameCreation= new GameCreator(window, sceneStack, mainDatabase);
@@ -44,14 +43,14 @@ public class Main extends Application {
             sceneStack.push(loadDatabaseScene);
             window.setScene(loadDatabaseScene);
         });
-        loadDatabseButton.setMaxWidth(130);
+        //loadDatabseButton.setMaxWidth(130);
 
         Button newDatabaseButton=new Button("New Database");
         newDatabaseButton.setOnAction(e-> {
             sceneStack.push(newDatabaseScene);
             window.setScene(newDatabaseScene);
         });
-        newDatabaseButton.setMaxWidth(130);
+        //newDatabaseButton.setMaxWidth(130);
 
         Button startTestButton=new Button("Make a Test");
         startTestButton.setOnAction(e-> {
@@ -59,29 +58,30 @@ public class Main extends Application {
             sceneStack.push(gameCreation.getScene());
             window.setScene(gameCreation.getScene());
         });
-        startTestButton.setMaxWidth(130);
+        //startTestButton.setMaxWidth(130);
 
         Button exitButton=new Button("Exit");
         exitButton.setOnAction(e-> {
             sceneStack.clear();
             window.close();
         });
-        exitButton.setMaxWidth(130);
+        //exitButton.setMaxWidth(130);
 
         Button aboutButton=new Button("About");
         aboutButton.setOnAction(e-> {
             sceneStack.push(aboutScene);
             window.setScene(aboutScene);
         });
-        aboutButton.setMaxWidth(130);
+       // aboutButton.setMaxWidth(130);
 
 
         menuButtons.getChildren().addAll(newDatabaseButton,loadDatabseButton,startTestButton,aboutButton,exitButton);
         menuButtons.setAlignment(Pos.CENTER);
-        menuButtons.setSpacing(10);
+        menuButtons.setSpacing(20);
         mainMenuLayout.setCenter(menuButtons);
 
         mainMenuScene=new Scene(mainMenuLayout,400,400);
+        mainMenuScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
         sceneStack.push(mainMenuScene);
         window.setTitle("Generator kartkówek");
         window.setScene(mainMenuScene);
@@ -91,12 +91,15 @@ public class Main extends Application {
     void databaseInitialization(){
         mainDatabase=new MainDatabase();
         try {
-            if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
+            if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"))){
+                System.out.println("Nie ma pliku");
                 Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
+            }
             BufferedReader br = new BufferedReader(
                     new FileReader("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             String line = br.readLine();
             while (line != null) {
+                System.out.println(line+" loaded");
                 mainDatabase.insert(line,"src"+ File.separator+ "databases" + File.separator+ line + ".txt");
                 line = br.readLine();
             }
