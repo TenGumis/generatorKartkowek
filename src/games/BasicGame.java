@@ -100,7 +100,7 @@ public class BasicGame implements Game {
 
         // Scene
         Scene scene = new Scene(scrollPane);
-        scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"GameStyleScheet.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
 
         return scene;
     }

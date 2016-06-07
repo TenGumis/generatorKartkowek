@@ -2,6 +2,7 @@ package mainWindow;
 
 import games.BasicGame;
 import games.Game;
+import games.TrueFalseGame;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -34,6 +35,7 @@ public class GameCreator {
         availableGames.put("BasicGame", new BasicGame());
         availableGames.put("Tralala", new BasicGame());
         availableGames.put("Bumschakalaka", new BasicGame());
+        availableGames.put("True or False",new TrueFalseGame());
     }
 
     public GameCreator(Stage window, Stack<Scene> stackScene, MainDatabase db) {
@@ -254,7 +256,7 @@ public class GameCreator {
         borderPane.setBottom(back);
         borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
         myScene.setRoot(borderPane);
-        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"GameStyleScheet.css").toExternalForm());
+        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
 
 
 
