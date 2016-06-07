@@ -25,6 +25,7 @@ import javafx.util.Pair;
 import mainWindow.MainDatabase;
 
 import java.awt.*;
+import java.io.File;
 import java.util.*;
 import java.util.List;
 
@@ -99,6 +100,8 @@ public class BasicGame implements Game {
 
         // Scene
         Scene scene = new Scene(scrollPane);
+        scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
+
         return scene;
     }
 

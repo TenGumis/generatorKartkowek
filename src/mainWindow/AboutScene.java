@@ -9,6 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sun.font.TextLabel;
 
+import java.io.File;
 import java.util.Stack;
 
 /**
@@ -28,14 +29,14 @@ public class AboutScene{
                 "> Bąk Paweł\n" +
                 "> Pabian Mateusz\n" +
                 "\n");
-        aboutLabel.setMaxWidth(300);
+        //aboutLabel.setMaxWidth(300);
 
         Button backButton=new Button("Back");
         backButton.setOnAction(e-> {
             stackScene.pop();
             window.setScene(stackScene.peek());
         });
-        backButton.setMaxWidth(130);
+        //backButton.setMaxWidth(130);
 
         aboutText.getChildren().addAll(aboutLabel,backButton);
         aboutText.setSpacing(20);
@@ -43,7 +44,8 @@ public class AboutScene{
 
         aboutLayout.setCenter(aboutText);
 
-        aboutScene=new Scene(aboutLayout,400,400);
+        aboutScene=new Scene(aboutLayout,Main.sceneWidth,Main.sceneHeight);
+        aboutScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"newDatabaseStyleScheet.css").toExternalForm());
     }
 
     Scene getScene(){

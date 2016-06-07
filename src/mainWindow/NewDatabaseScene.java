@@ -12,6 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -27,16 +28,17 @@ public class NewDatabaseScene {
         VBox newDatabasePanel=new VBox();
 
         Label infoLabel=new Label("Create databse:");
-        infoLabel.setMaxWidth(130);
+        infoLabel.setId("newDatabaseScene_infoLabel");
+       // infoLabel.setMaxWidth(130);
 
         TextField databaseName = new TextField();
         databaseName.setPromptText("Database name");
         databaseName.setAlignment(Pos.CENTER);
-        databaseName.setMaxWidth(130);
+        //databaseName.setMaxWidth(130);
         databaseName.setFocusTraversable(false);
 
         Button okButton = new Button("OK");
-        okButton.setMaxWidth(130);
+       // okButton.setMaxWidth(130);
         okButton.setAlignment(Pos.CENTER);
         okButton.setDefaultButton(true);
         okButton.setOnAction(event -> {
@@ -53,7 +55,7 @@ public class NewDatabaseScene {
             stackScene.pop();
             window.setScene(stackScene.peek());
         });
-        backButton.setMaxWidth(130);
+        //backButton.setMaxWidth(130);
 
         newDatabasePanel.getChildren().addAll(infoLabel,databaseName,okButton,backButton);
         newDatabasePanel.setSpacing(20);
@@ -61,7 +63,9 @@ public class NewDatabaseScene {
 
         newDatabaseLayout.setCenter(newDatabasePanel);
 
-        newDatabaseScene=new Scene(newDatabaseLayout,400,400);
+        newDatabaseScene=new Scene(newDatabaseLayout,Main.sceneWidth,Main.sceneHeight);
+        newDatabaseScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"newDatabaseStyleScheet.css").toExternalForm());
+
     }
 
     private void showAlertBadDataBaseName() {

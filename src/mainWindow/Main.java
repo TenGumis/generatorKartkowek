@@ -16,6 +16,8 @@ import java.util.Stack;
 
 public class Main extends Application {
 
+
+    public static int sceneWidth=1280,sceneHeight=720;
     private Stage window;
     private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene;
     private GameCreator gameCreation;
@@ -27,10 +29,8 @@ public class Main extends Application {
         databaseInitialization();
 
         window=primaryStage;
-        aboutScene=new AboutScene(window,sceneStack).getScene();
         newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
-        //gameCreation= new GameCreator(window, sceneStack, mainDatabase);
         gameCreation = new GameCreator(window, sceneStack, mainDatabase);
 
 
@@ -69,6 +69,7 @@ public class Main extends Application {
 
         Button aboutButton=new Button("About");
         aboutButton.setOnAction(e-> {
+            aboutScene=new AboutScene(window,sceneStack).getScene();
             sceneStack.push(aboutScene);
             window.setScene(aboutScene);
         });
@@ -80,7 +81,7 @@ public class Main extends Application {
         menuButtons.setSpacing(20);
         mainMenuLayout.setCenter(menuButtons);
 
-        mainMenuScene=new Scene(mainMenuLayout,400,400);
+        mainMenuScene=new Scene(mainMenuLayout,sceneWidth,sceneHeight);
         mainMenuScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
         sceneStack.push(mainMenuScene);
         window.setTitle("Generator kartkówek");

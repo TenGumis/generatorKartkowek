@@ -32,17 +32,17 @@ public class LoadDatabaseScene {
 
         Label infoLabel0=new Label("Your file:");
         infoLabel0.setAlignment(Pos.CENTER);
-        infoLabel0.setMaxWidth(180);
+        //infoLabel0.setMaxWidth(180);
 
         Label infoLabel1=new Label("Database name:");
         infoLabel1.setAlignment(Pos.CENTER);
-        infoLabel1.setMaxWidth(180);
+       // infoLabel1.setMaxWidth(180);
 
 
         TextField databaseName=new TextField();
         databaseName.setPromptText("Set your database name:");
         databaseName.setAlignment(Pos.CENTER);
-        databaseName.setMaxWidth(180);
+        //databaseName.setMaxWidth(180);
         if(selectedFile == null) databaseName.setDisable(true);
         else databaseName.setDisable(false);
 
@@ -55,7 +55,7 @@ public class LoadDatabaseScene {
             stackScene.pop();
             window.setScene(stackScene.peek());
         });
-        backButton.setMaxWidth(180);
+        //backButton.setMaxWidth(180);
 
         Button okButton=new Button("OK");
         okButton.setOnAction(e-> {
@@ -84,7 +84,7 @@ public class LoadDatabaseScene {
                 }
             }
         });
-        okButton.setMaxWidth(180);
+       // okButton.setMaxWidth(180);
 
         Button loadDatabaseButton=new Button("Choose database file");
         loadDatabaseButton.setOnAction(e-> {
@@ -106,7 +106,7 @@ public class LoadDatabaseScene {
             }
         });
 
-        loadDatabaseButton.setMaxWidth(180);
+        //loadDatabaseButton.setMaxWidth(180);
 
 
         loadDatabasePanel.getChildren().addAll(loadDatabaseButton,infoLabel0,databaseName,okButton,backButton);
@@ -115,7 +115,7 @@ public class LoadDatabaseScene {
 
         loadDatabaseLayout.setCenter(loadDatabasePanel);
 
-        loadDatabaseScene=new Scene(loadDatabaseLayout,400,400);
+        loadDatabaseScene=new Scene(loadDatabaseLayout,Main.sceneWidth,Main.sceneHeight);
         loadDatabaseScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
     }
 

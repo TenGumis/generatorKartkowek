@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -21,7 +22,7 @@ import java.util.*;
 public class GameCreator {
     private Stage window;
     private VBox layout = new VBox();
-    private Scene myScene = new Scene(layout, 400, 400);
+    private Scene myScene = new Scene(layout, Main.sceneWidth, Main.sceneHeight);
     private GridPane grid;
     private MainDatabase db;
     private static Map<String, Game> availableGames = new HashMap<>();
@@ -254,6 +255,8 @@ public class GameCreator {
         borderPane.setBottom(back);
         borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
         myScene.setRoot(borderPane);
+        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
+
 
 
         stackScene.push(myScene);

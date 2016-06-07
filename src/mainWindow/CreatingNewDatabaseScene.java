@@ -127,11 +127,12 @@ public class CreatingNewDatabaseScene {
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
         scrollPane.setPrefHeight(500);
-        scrollPane.setPrefWidth(400);
+        scrollPane.setPrefWidth(500);
         scrollPane.setContent(grid);
         //scrollPane.setFitToWidth(true);
 
         Scene scene = new Scene(scrollPane);
+        scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"newDatabaseStyleScheet.css").toExternalForm());
         window.setScene(scene);
         window.showAndWait();
     }
