@@ -1,0 +1,306 @@
+Żywienie, zakupy i usługi
+apricot:morela
+asparagus:szparagi
+aubergine:bakłażan
+beans:fasola
+blackcurrant:czarna porzeczka
+broccoli:brokuły
+courgette:cukinia
+cucumber:ogórek
+garlic:czosnek
+lettuce:sałata
+olive:oliwka
+pepper:papryka
+pumpkin:dynia
+radish:rzodkiewka
+raspberry:malina
+soy beans:soja
+spinach:szpinak
+watermelon:arbuz
+bacon:boczek
+beefsteak:befsztyk
+cod:dorsz
+flounder:flądra
+herring:śledź
+lamb:jagnięcina
+pork:wieprzowina
+salmon:łosoś
+sole:sola
+trout:pstrąg
+turkey:indyk
+veal:cielęcina
+cereal products:produkty zbożowe
+chewing gum:guma do żucia
+cream:śmietana
+dairy products:nabiał
+mushroom:grzyb
+nut:orzech
+olive oil:oliwa
+parmesan cheese:parmezan
+rice:ryż
+roll:bułka
+seafood:owoce morza
+seaweed:wodorosty
+seeds:nasiona
+spices:przyprawy
+thyme:tymianek
+vegetable oil:olej roślinny
+meatballs:klopsiki
+pasta:makaron
+pastry:ciasto kruche
+pork ribs:żeberka wieprzowe
+roast chicken:pieczony kurczak
+sausage roll:pasztecik z parówką
+appetising:apetyczny
+bland:mdły,nijaki
+creamy:kremowy
+crusty:chrupiący
+decaffeinated:bezkofeinowy(o kawie)
+fatty:tłusty(o mięsie)
+free-range:z wolnego chowu
+homemade:domowej roboty
+lean:chudy(o mięsie)
+organic:organiczny
+pickled:marynowany
+raw:surowy
+savoury:słony,pikantny
+sparkling:gazowany
+still:niegazowany
+spicy:ostry
+stir-fried:smażony na sposób chiński
+sugar-free:bezcukrowy
+thick:gęsty
+vegan:wegański
+vegetarian:wegetariański
+wholemeal:razowy
+animal fat:tłuszcz zwierzęcy
+calcium:wapń
+carbohydrates:węglowodany
+cholesterol:cholesterol
+fibre:błonnik
+nutrients:składniki odżywcze
+potassium:potas
+protein:białko
+starch:skrobia
+saturated fats:tłuszcze nasycone
+unsaturated fats:tłuszcze nienasycone
+vegetable fat:tłuszcz roślinny
+vitamins:witaminy
+balanced diet:zrównoważona dieta
+crash diet:intensywna dieta odchudzająca
+cut down on:ograniczyć
+fatty foods:tłuste produkty
+dietary habits:nawyki żywieniowe
+digestion:trawienie
+fad diet:dieta będąca chwilowo w modzie
+fat-free:beztłuszczowy
+food intolerance:nietolerancja pokarmowa
+malnourished:niedożywiony
+malnutrition:niedożywienie
+Mediterranean diet:dieta śródziemnomorska
+nutrition:odżywianie
+processed foods:produkty przetworzone
+reduce fat intake:ograniczyć spożywanie tłuszczu
+reduce sugar intake:ograniczyć spożywanie cukru
+starving:bardzo głodny
+add:dodać
+bake:piec(np. chleb)
+beat:ubijać(np. jajka)
+boil:gotować(doprowadać do wrzenia)
+chop:siekać
+cook:gotować
+cut:kroić
+drain:odcedzać
+fry:smażyć
+grate:zetrzeć na tarce
+ingredient:składnik
+mince:zmielić
+mix:mieszać(różne substancje)
+peel:obrać
+recipe:przepis
+roast:piec
+serve:podawać
+slice:kroić
+stew:dusić
+stir:mieszać(jedną substancję)
+strip:pasek
+whip:ubijać(np. śmietanę)
+bowl:miska
+casserole dish:naczynie żaroodporne
+crockery:naczynia
+cutlery:sztućce
+lid:przykrywka
+mug:kubek
+napkin:serwetka
+place mat:podkładka pod talerz
+oven:piekarnik
+pre-hated:nagrzany(piekarnik)
+saucepan:rondel
+can:puszka
+container:pojemnik
+jar:słoik
+loaf:bochenek
+packet:paczka
+tablespoon:łyżka stołowa
+tub:plastikowe pudełko z przykrywką
+tube:tubka
+a la carte:wybór z karty
+chef:kucharz
+cold buffet:zimny buffet
+dessert:deser
+main course:danie główne
+on the menu:w karcie
+order:zamówić, zamówienie
+set menu:gotowy zestaw
+side dish:dodatek do dania głównego
+snack:przekąska
+starter:przystawka
+tip:napiwek
+wine list:karta win
+go bananas:wściec się
+have a finger in every pie:maczać we wszystkim palce
+it's no use crying over split milk:nie ma sensu płakać nad rozlanym mlekiem
+it's not my cup of tea:nie przepadam za tym
+sell like hot cakes:sprzedawać się jak świeże bułeczki
+spill the beans:wygadać się,wyjawić tajemnicę
+butcher's:sklep mięsny
+chain store:sklep należący do sieci
+delicatessen:delikatesy
+DIY shop:sklpe z narzędziami
+fishmonger's:sklep rybny
+garden centre:centrum ogrodnicze
+greengrocer's:sklep z warzywami
+newsagent's:kiosk z gazetami
+off-licence:sklep z alkoholem
+shopping mall:centrum hadlowe
+stationer's:sklep papierniczy
+vending machine:automat(np. z napojami)
+beauty products:kosmetyki
+clothing:ubrania
+consumer durables:towary trwałego użytku(np. meble)
+electrical goods:urządenia elektryczne
+garment:część garderoby
+groceries:artykuły spożywcze
+hardware:narzędzia
+household goods:artykuły gospodarstwa domowego
+stationery:artykuły papiernicze
+toiletries:artykuły higieny osobistej
+attract customers:przyciągać klientów
+deliver:dostarczać
+good range of products:szeroki wybór produktów
+in stock:dostępny w sprzedaży
+out of stock:niedostępny w sprzedaży
+marketing trick:sztuczka marketingowa
+mail order:sprzedaż wysyłkowa
+order sth online:zamówić coś przez internet
+same-day delivery:dostawa w dniu zakupu
+shopaholic:osoba uleżniona od robienia zakupów
+stock up on sth:uzupełnić zapasy
+window shopping:oglądanie wystaw sklepowych
+barcode:kod kreskowy
+basket:koszyk
+cashier:kasjer/kasjerka
+checkout:kasa(miejsce w supermarkecie)
+conveyor belt:taśma przy kasie
+queue:kolejka
+receipt:paragon
+till:kasa(urządzenie)
+trolley:wózek na zakupy
+bargain hunting:pogoń za okazjami
+discount:zniżka
+forty per cent off:czterdzieści procent zniżki
+free:za darmo
+get a good deal:dostać dobrą ofertę
+good value for money:wart swojej ceny
+haggle/bargain:targować się
+half price:za pół ceny
+on special offer:w ofercie specjalnej
+reasonable prices:rozsądne ceny
+reduced/discounted:przeceniony
+reduction:przecena
+retail price:cena detaliczna
+wholesale price:cena hurtowa
+rock-bottom prices:ceny najniższe z możliwych
+sale:wyprzedaż
+two for the price of one:dwa w cenie jednego
+astronomical prices:astronomiczne ceny
+cost a small fortune:kosztować fortunę
+cost an arm and a leg:bardzo dużo kosztować
+daylight robbery:rozbój w biały dzień
+exorbitant prices:wygórowane ceny
+rip-off:zdzierstwo
+pay by bank transfer:płacić przelewem bankowym
+pay by credit card:płacić kartą kredytową
+pay in advance front:pacić z góry
+pay in cash:płacić gotówką
+pay in instalments:płacić w ratach
+splash out on:wydać dużo pieniędzy na
+client/customer service advisor:pracownik działu obsługi klienta
+consider a complaint:rozpatrzyć reklamację
+satisfaction:zadowolnenie
+dissatisfaction:niezadowolenie
+satisfied:zadowolony
+dissatisfied:niezadowolony
+exchange:wymienić
+faulty:wadliwy
+make a complain:złożyć reklamację
+malfunction:źle funkcjonować
+offer a solution:zaproponować rozwiązanie
+proof of purchase:dowód zakupu
+receive a refund:otrzymać zwrot pieniędzy
+refund sb's money:zwrócić komuś pieniądze
+replacement:towar na wymianę
+return:zwrócić
+satisfactory service:zadowalająca obsługa
+unsatisfactory service:niezadowalająca obsługa
+warranty/guarantee:gwarancja
+advertising slogan:hasło reklamowe
+brand/make:marka
+celebrity endorsement:udział gwiazdy w reklamie
+comparative advertising:reklama porównawcza
+direct mail:reklama wysyłana pocztą
+free sample:darmowe próbki
+out-of-home/outdoor advertising:reklama outdoorowa
+pop-up ad:internetowa reklama wyskakująca w oknie
+product placement:lokowanie produktu
+branch:oddział
+card reader:czytnik kart
+cashpoint/cash machine/ATM:bankomat
+change money:rozmieniać pieniądze
+charge:opłata
+deposit:wpłacać
+direct debit:polecenie zapłaty
+exchange rates:kurs wymiany walut
+interest:oprocentowanie
+transfer:przelew
+online transfer:przelew internetowy
+close an account:zamknąć konto
+overdraft:debet
+pay interest on sth:płacić odsetki od czegoś
+standing order:zlecenie stałe
+take out a loan:zaciągnąć kredyt
+withdraw:wypłacać
+withdrawal:wypłata
+courier:kurier
+dating service:serwis randkowy
+dry cleaner's:pralnia chemiczna
+garage:warsztat
+laundrette:pralnia samoobsługowa
+minicab:taksówka na telefon,przewóz osób
+bicycle repair shop:punkt naprawy rowerów
+tailor:krawiec męski
+dresmaker:krawiec damski
+window cleaner:czyściciel okien
+car insurance:ubezpieczenie samochodu
+life insurance:ubezpieczenie na życie
+claim for sth on your insurance:zgłosić roszczenie ubezpieczeniowe
+compensation/damages:odszkodowanie
+comprehensive motor insurance:autocasco
+cover:pokryć
+damage:szkoda
+insurance against sth:ubezpieczenie od czegoś
+insurance broker/agent:agent ubezpieczeniowy
+insurance claim:roszczenie ubezpieczeniowe
+insurance policy:polisa ubezpieczeniowa
+liability insurance:ubezpieczenie od odpowiedzialności cywilnej
+take out insurance:ubezpieczyć się
