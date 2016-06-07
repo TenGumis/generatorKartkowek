@@ -65,6 +65,7 @@ public class GameCreator {
             gamesCurrentlyUsed.clear();
             boolean succesFullCreation = true;
             Stack<Scene> nextGames = new Stack<>(), previousGames = new Stack<>();
+
             for (String s : choiceOfGameContent.keySet()) {
                 if (choiceOfGameContent.get(s).checkBox.isSelected()) {
                     gamesCurrentlyUsed.add(availableGames.get(s));
@@ -99,14 +100,13 @@ public class GameCreator {
                         return;
                     try {
                         nextGames.push(availableGames.get(s).play(
-                                new Integer(choiceOfGameContent.get(s).numberOfWords.getText()),
-                                categoriesToPlay, db
-                        ));
-                    } catch (Exception e) {}
+                                new Integer(choiceOfGameContent.get(s).numberOfWords.getText()), categoriesToPlay, db));
+                    } catch (Exception e) {      }
                 }
             }
             succesFullCreation = InputValidation.validate(() -> {return !gamesCurrentlyUsed.isEmpty();},
                     "You must choose at least one game.");
+
             if (succesFullCreation) {
                 for (String s : choiceOfGameContent.keySet()) {
                     if (choiceOfGameContent.get(s).checkBox.isSelected()) {
@@ -255,7 +255,7 @@ public class GameCreator {
         borderPane.setBottom(back);
         borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
         myScene.setRoot(borderPane);
-        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
+        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"GameStyleScheet.css").toExternalForm());
 
 
 
