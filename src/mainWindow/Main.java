@@ -54,7 +54,7 @@ public class Main extends Application {
 
         Button startTestButton=new Button("Make a Test");
         startTestButton.setOnAction(e-> {
-            //gameCreation.refreshCategories();
+            gameCreation.updateCategories();
             sceneStack.push(gameCreation.getScene());
             window.setScene(gameCreation.getScene());
         });

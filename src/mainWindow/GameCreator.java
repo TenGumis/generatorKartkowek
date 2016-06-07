@@ -27,7 +27,6 @@ public class GameCreator {
     private MainDatabase db;
     private static Map<String, Game> availableGames = new HashMap<>();
     private Map<String, GameHboxContent> choiceOfGameContent = new HashMap<>();
-    List<CheckMenuItem> listOfCategories = new ArrayList<>();
     private List<Game> gamesCurrentlyUsed = new LinkedList<>();
 
 
@@ -271,10 +270,12 @@ public class GameCreator {
         CheckBox checkBox;
         TextField numberOfWords;
         MenuBar categories;
+        MainDatabase db;
 
 
         GameHboxContent(String gameName, HBox box, MainDatabase db) {
             this.gameName=gameName;
+            this.db=db;
 
             // Label with Game Name
             this.gameNameLabel = new Label(gameName);
@@ -303,6 +304,10 @@ public class GameCreator {
             // Menu with categooryChoice
             categories = makeCategoriesMenu(db);
         }
+
+        void hboxContentUpdate() {
+            categories = makeCategoriesMenu(db);
+        }
     }
 
     static public MenuBar makeCategoriesMenu(MainDatabase db) {
@@ -311,6 +316,11 @@ public class GameCreator {
             categoriyMenu.getItems().add(new CheckMenuItem(s));
         MenuBar menuBar = new MenuBar(categoriyMenu);
         return menuBar;
+    }
+
+    public void updateCategories() {
+        for (GameHboxContent gameHboxContent : choiceOfGameContent.values())
+            gameHboxContent.hboxContentUpdate();
     }
 
     public Scene getScene() {
