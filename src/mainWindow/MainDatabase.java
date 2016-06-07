@@ -3,6 +3,7 @@ package mainWindow;
 import javafx.util.Pair;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -12,12 +13,16 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class MainDatabase {
     private HashMap<String,String> kategorie;
+    int size=0;
     MainDatabase(){
         kategorie=new HashMap<>();
     }
-    public void insert(String a,String b) {
-        kategorie.put(a,b);
+    public void insert(String a) {
+        kategorie.put(a,String.valueOf(size));
+        size++;
     }
+
+    public int getSize() {return size;}
 
     public Set<String> getCategories() {
         return kategorie.keySet();
@@ -27,8 +32,11 @@ public class MainDatabase {
         if(kategorie.containsKey(category)){
             ArrayList<Pair<String,String>> result=new ArrayList<>();
             if(count<1) return result;
-            BufferedReader br = new BufferedReader(new FileReader(kategorie.get(category)));
+            BufferedReader br=null;
+
             try {
+                br = new BufferedReader(new FileReader("src"+ File.separator+"databases"+File.separator+kategorie.get(category)+".txt"));
+
                 br.readLine(); //czytam tytuł;
                 String line = br.readLine();
                 String[] parts;
@@ -43,10 +51,14 @@ public class MainDatabase {
                 shuffle(result);
                 return result;
             } finally {
-                br.close();
+                if(br!=null)br.close();
             }
         }
-        else throw new Exception("Brak kategorii");
+        else
+        {
+            System.out.println("Brak kategorii!");
+            throw new Exception("Brak kategorii");
+        }
     }
     private static void shuffle(ArrayList<Pair<String,String>> array){
         int noOfElements =array.size();

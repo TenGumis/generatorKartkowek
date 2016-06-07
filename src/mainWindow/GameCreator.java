@@ -127,12 +127,11 @@ public class GameCreator {
                 while (!nextGames.isEmpty()) {
                     Scene current = nextGames.pop();
                     AnchorPane anchor = new AnchorPane();
-                    AnchorPane.setBottomAnchor(current.getRoot(), 35.0);
-                    AnchorPane.setTopAnchor(current.getRoot(), 0.1);
-                    AnchorPane.setLeftAnchor(current.getRoot(), 0.1);
-                    AnchorPane.setRightAnchor(current.getRoot(), 0.1);
-                    anchor.getChildren().add(current.getRoot());
-
+                        AnchorPane.setBottomAnchor(current.getRoot(), 35.0);
+                        AnchorPane.setTopAnchor(current.getRoot(), 0.1);
+                        AnchorPane.setLeftAnchor(current.getRoot(), 0.1);
+                        AnchorPane.setRightAnchor(current.getRoot(), 0.1);
+                        anchor.getChildren().add(current.getRoot());
                     Button next = new Button("Next"), prev = new Button("Previous");
                     AnchorPane.setBottomAnchor(next, 5.0);
                     AnchorPane.setRightAnchor(next, 20.0);

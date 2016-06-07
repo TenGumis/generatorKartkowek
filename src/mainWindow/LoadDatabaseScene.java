@@ -66,9 +66,9 @@ public class LoadDatabaseScene {
                         throw new NotTxtExtensionException();
 
                     Files.copy(Paths.get(selectedFile.getAbsolutePath()),
-                            Paths.get("src"+ File.separator+"databases"+ File.separator + databaseName.getText() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
+                            Paths.get("src"+ File.separator+"databases"+ File.separator + mainDatabase.getSize() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
 
-                    mainDatabase.insert(databaseName.getText(),"src"+ File.separator+"databases"+ File.separator + databaseName.getText() + ".txt");
+                    mainDatabase.insert(databaseName.getText());
 
                     if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
                         Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
@@ -101,6 +101,8 @@ public class LoadDatabaseScene {
                     databaseName.setText(bufferedReader.readLine());
                 } catch (Exception e1) {
                     e1.printStackTrace();
+                } finally {
+
                 }
                 databaseName.setDisable(false);
             }

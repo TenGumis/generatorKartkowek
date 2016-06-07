@@ -101,7 +101,8 @@ public class Main extends Application {
             String line = br.readLine();
             while (line != null) {
                 System.out.println(line+" loaded");
-                mainDatabase.insert(line,"src"+ File.separator+ "databases" + File.separator+ line + ".txt");
+                System.out.println("|"+line+"|");
+                mainDatabase.insert(line);
                 line = br.readLine();
             }
         } catch (FileNotFoundException e) {
