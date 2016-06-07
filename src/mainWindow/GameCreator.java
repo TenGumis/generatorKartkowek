@@ -257,7 +257,7 @@ public class GameCreator {
         borderPane.setBottom(back);
         borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
         myScene.setRoot(borderPane);
-        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"GameStyleScheet.css").toExternalForm());
+        myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
 
 
 
