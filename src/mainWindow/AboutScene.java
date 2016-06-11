@@ -22,6 +22,7 @@ public class AboutScene{
     public AboutScene(){
 
         aboutStage=new Stage();
+        aboutStage.setTitle("About");
         Scene aboutScene;
 
         BorderPane aboutLayout=new BorderPane();

@@ -17,9 +17,18 @@ public class MainDatabase {
     MainDatabase(){
         kategorie=new HashMap<>();
     }
+
     public void insert(String a) {
         kategorie.put(a,String.valueOf(size));
         size++;
+    }
+
+    public void remove(String a) {
+        kategorie.remove(a);
+    }
+
+    public boolean contain(String s){
+        return  kategorie.containsKey(s);
     }
 
     public int getSize() {return size;}

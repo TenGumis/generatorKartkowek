@@ -1,5 +1,8 @@
 package mainWindow;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by filip on 6/7/16.
  */
@@ -17,5 +20,11 @@ public class InputValidation {
             return false;
         }
         return true;
+    }
+    public static boolean onlyCharOrDigit(String s){
+        Pattern p = Pattern.compile("[^A-za-z0-9 ]", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(s);
+        boolean b = m.find();
+        return !b;
     }
 }

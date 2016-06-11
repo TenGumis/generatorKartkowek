@@ -2,89 +2,86 @@ package mainWindow;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import java.io.*;
 import java.nio.file.*;
-import java.util.Stack;
 
 /**
  * Created by tengumis on 12.05.2016.
  */
 public class LoadDatabaseScene {
 
-    private Scene loadDatabaseScene;
     private File selectedFile=null;
-    private MainDatabase mainDatabase;
+    private Stage loadDatabaseStage =null;
 
-    public LoadDatabaseScene(Stage window, Stack<Scene> stackScene,MainDatabase mainDatabase){
-        this.mainDatabase=mainDatabase;
+    public LoadDatabaseScene(Stage window1,MainDatabase mainDatabase){
+        loadDatabaseStage =new Stage();
+        loadDatabaseStage.setTitle("Load database");
+        loadDatabaseStage.initModality(Modality.WINDOW_MODAL);
+        loadDatabaseStage.initOwner(window1);
 
         BorderPane loadDatabaseLayout=new BorderPane();
         VBox loadDatabasePanel=new VBox();
 
         Label infoLabel0=new Label("Your file:");
         infoLabel0.setAlignment(Pos.CENTER);
-        //infoLabel0.setMaxWidth(180);
 
         Label infoLabel1=new Label("Database name:");
         infoLabel1.setAlignment(Pos.CENTER);
-       // infoLabel1.setMaxWidth(180);
-
 
         TextField databaseName=new TextField();
         databaseName.setPromptText("Set your database name:");
         databaseName.setAlignment(Pos.CENTER);
-        //databaseName.setMaxWidth(180);
+
         if(selectedFile == null) databaseName.setDisable(true);
         else databaseName.setDisable(false);
 
-
-
-
-        Button backButton=new Button("Back");
-        backButton.setOnAction(e-> {
-            System.out.println(stackScene.size());
-            stackScene.pop();
-            window.setScene(stackScene.peek());
-        });
-        //backButton.setMaxWidth(180);
+        Button closeButton=new Button("Close");
+        closeButton.setOnAction(e-> loadDatabaseStage.close());
 
         Button okButton=new Button("OK");
         okButton.setOnAction(e-> {
-            if (selectedFile != null) {
-                System.out.println(databaseName.getText());
-                try {
-                    if(!selectedFile.getName().endsWith(".txt"))
-                        throw new NotTxtExtensionException();
+            if (selectedFile != null && !mainDatabase.contain(databaseName.getText()) && !databaseName.getText().equals("")) {
 
-                    Files.copy(Paths.get(selectedFile.getAbsolutePath()),
-                            Paths.get("src"+ File.separator+"databases"+ File.separator + mainDatabase.getSize() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
+                    try {
 
-                    mainDatabase.insert(databaseName.getText());
+                        Files.copy(Paths.get(selectedFile.getAbsolutePath()),
+                                Paths.get("src" + File.separator + "databases" + File.separator + mainDatabase.getSize() + ".txt"), StandardCopyOption.REPLACE_EXISTING);
 
-                    if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
-                        Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
-                    Files.write(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"), (databaseName.getText()+System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+                        mainDatabase.insert(databaseName.getText());
 
-                    stackScene.pop();
-                    window.setScene(stackScene.peek());
+                        if (!Files.exists(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt")))
+                            Files.createFile(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"));
+                        Files.write(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"), (databaseName.getText() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
 
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                } catch (InvalidPathException | NotTxtExtensionException e1) {
-                    showAlertBadPath();
+                        System.out.println("Loaded: " + databaseName.getText());
+
+                        loadDatabaseStage.close();
+
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                        mainDatabase.remove(databaseName.getText());
+                    }
+            } else{
+                infoLabel0.setStyle("-fx-text-fill: red");
+                if (selectedFile==null) {
+                    infoLabel0.setText("No file selected!");
+                }else if(mainDatabase.contain(databaseName.getText())){
+                    infoLabel0.setText("This category name already exist in database!");
                 }
+                else{
+                    infoLabel0.setText("Category name format is wrong!");
+                }
+
             }
         });
-       // okButton.setMaxWidth(180);
 
         Button loadDatabaseButton=new Button("Choose database file");
         loadDatabaseButton.setOnAction(e-> {
@@ -92,47 +89,35 @@ public class LoadDatabaseScene {
             fileChooser.setInitialDirectory( // set default directory to databases
                     new File("src" + System.getProperty("file.separator") + "databases"));
             fileChooser.setTitle("Choose database file");
-            selectedFile=fileChooser.showOpenDialog(window);
+            selectedFile=fileChooser.showOpenDialog(loadDatabaseStage);
             if (selectedFile!=null){
                 BufferedReader bufferedReader=null;
                 infoLabel0.setText("Your file: "+selectedFile.getName());
+                infoLabel0.setStyle("-fx-text-fill: black");
                 try {
                     bufferedReader=new BufferedReader(new FileReader(selectedFile));
                     databaseName.setText(bufferedReader.readLine());
+                    databaseName.setDisable(false);
                 } catch (Exception e1) {
-                    e1.printStackTrace();
-                } finally {
-
+                    infoLabel0.setStyle("-fx-text-fill: red");
+                    infoLabel0.setText("No file selected!");
+                    selectedFile=null;
+                    databaseName.setDisable(true);
                 }
-                databaseName.setDisable(false);
             }
         });
 
-        //loadDatabaseButton.setMaxWidth(180);
-
-
-        loadDatabasePanel.getChildren().addAll(loadDatabaseButton,infoLabel0,databaseName,okButton,backButton);
+        loadDatabasePanel.getChildren().addAll(loadDatabaseButton,infoLabel0,databaseName,okButton,closeButton);
         loadDatabasePanel.setSpacing(20);
         loadDatabasePanel.setAlignment(Pos.CENTER);
 
         loadDatabaseLayout.setCenter(loadDatabasePanel);
 
-        loadDatabaseScene=new Scene(loadDatabaseLayout,Main.sceneWidth,Main.sceneHeight);
+        Scene loadDatabaseScene;
+        loadDatabaseScene=new Scene(loadDatabaseLayout,350,400);
         loadDatabaseScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
+        loadDatabaseStage.setScene(loadDatabaseScene);
+        loadDatabaseStage.show();
     }
-
-    private void showAlertBadPath() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Błąd odczytu");
-        alert.setHeaderText("Błąd odczutu pliku");
-        alert.setContentText("Błędna ścieżka lub plik nie jest bazą danych!");
-        alert.showAndWait();
-    }
-
-    Scene getScene(){
-        return loadDatabaseScene;
-    }
-
-    private class NotTxtExtensionException extends Exception {}
 
 }
