@@ -17,9 +17,13 @@ import java.util.Stack;
  */
 public class AboutScene{
 
-    Scene aboutScene;
+    Stage aboutStage=null;
 
-    public AboutScene(Stage window,Stack<Scene> stackScene){
+    public AboutScene(){
+
+        aboutStage=new Stage();
+        Scene aboutScene;
+
         BorderPane aboutLayout=new BorderPane();
         VBox aboutText=new VBox();
 
@@ -29,26 +33,20 @@ public class AboutScene{
                 "> Bąk Paweł\n" +
                 "> Pabian Mateusz\n" +
                 "\n");
-        //aboutLabel.setMaxWidth(300);
 
-        Button backButton=new Button("Back");
-        backButton.setOnAction(e-> {
-            stackScene.pop();
-            window.setScene(stackScene.peek());
-        });
-        //backButton.setMaxWidth(130);
 
-        aboutText.getChildren().addAll(aboutLabel,backButton);
+        aboutText.getChildren().addAll(aboutLabel);
         aboutText.setSpacing(20);
         aboutText.setAlignment(Pos.CENTER);
 
         aboutLayout.setCenter(aboutText);
 
-        aboutScene=new Scene(aboutLayout,Main.sceneWidth,Main.sceneHeight);
+        aboutScene=new Scene(aboutLayout,550,300);
         aboutScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"newDatabaseStyleScheet.css").toExternalForm());
+        aboutStage.setScene(aboutScene);
     }
 
-    Scene getScene(){
-        return aboutScene;
+    Stage getWindow(){
+        return aboutStage;
     }
 }

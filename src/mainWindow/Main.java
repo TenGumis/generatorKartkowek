@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Pair;
 
 import java.io.*;
@@ -18,8 +19,8 @@ public class Main extends Application {
 
 
     public static int sceneWidth=1280,sceneHeight=720;
-    private Stage window;
-    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene,aboutScene;
+    private Stage window,aboutStage=null;;
+    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene;
     private GameCreator gameCreation;
     private Stack<Scene> sceneStack=new Stack<>();
     private MainDatabase mainDatabase=null;
@@ -33,6 +34,32 @@ public class Main extends Application {
         testScene=new TestScene(window,sceneStack).getScene();
         gameCreation = new GameCreator(window, sceneStack, mainDatabase);
 
+
+        //Menu Bar initialization
+        MenuBar menuBar=new MenuBar();
+        Menu file=new Menu("File");
+        MenuItem newDatabase=new MenuItem("New database");
+        MenuItem loadDatabase=new MenuItem("Load database");
+        MenuItem exit=new MenuItem("Exit");
+        SeparatorMenuItem separator=new SeparatorMenuItem();
+        file.getItems().addAll(newDatabase,loadDatabase,separator,exit);
+
+        Menu help=new Menu("Help");
+        MenuItem about=new MenuItem("About");
+        help.getItems().addAll(about);
+
+        menuBar.getMenus().addAll(file,help);
+
+        about.setOnAction(e->{
+            aboutStage=new AboutScene().getWindow();
+            aboutStage.show();
+        });
+
+        exit.setOnAction(e->{
+            sceneStack.clear();
+            if(aboutStage!=null) aboutStage.close();
+            if(window!=null) window.close();
+        });
 
         BorderPane mainMenuLayout=new BorderPane();
         VBox menuButtons=new VBox();
@@ -67,19 +94,11 @@ public class Main extends Application {
         });
         //exitButton.setMaxWidth(130);
 
-        Button aboutButton=new Button("About");
-        aboutButton.setOnAction(e-> {
-            aboutScene=new AboutScene(window,sceneStack).getScene();
-            sceneStack.push(aboutScene);
-            window.setScene(aboutScene);
-        });
-       // aboutButton.setMaxWidth(130);
-
-
-        menuButtons.getChildren().addAll(newDatabaseButton,loadDatabseButton,startTestButton,aboutButton,exitButton);
+        menuButtons.getChildren().addAll(newDatabaseButton,loadDatabseButton,startTestButton,exitButton);
         menuButtons.setAlignment(Pos.CENTER);
         menuButtons.setSpacing(20);
         mainMenuLayout.setCenter(menuButtons);
+        mainMenuLayout.setTop(menuBar);
 
         mainMenuScene=new Scene(mainMenuLayout,sceneWidth,sceneHeight);
         mainMenuScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"mainStyleScheet.css").toExternalForm());
