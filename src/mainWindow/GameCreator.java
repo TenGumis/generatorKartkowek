@@ -29,6 +29,7 @@ public class GameCreator {
     private static Map<String, Game> availableGames = new HashMap<>();
     private Map<String, GameHboxContent> choiceOfGameContent = new HashMap<>();
     private List<Game> gamesCurrentlyUsed = new LinkedList<>();
+    private BorderPane borderPane=null;
 
 
     static {
@@ -233,27 +234,14 @@ public class GameCreator {
         layout.getChildren().add(start);
 
 
-
-        // Back Button
-        Button back = new Button("Back to Main Menu");
-        back.setOnAction(event -> {
-            for (String s : availableGames.keySet())
-                if (choiceOfGameContent.get(s).checkBox.isSelected())
-                    choiceOfGameContent.get(s).checkBox.fire();
-            stackScene.pop();
-            window.setScene(stackScene.peek());
-        });
-        layout.getChildren().add(back);
-
-
         // set up the layout on current window
         layout.setAlignment(Pos.CENTER);
 
-        BorderPane borderPane = new BorderPane();
+        borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 10, 10, 10));
         borderPane.setCenter(layout);
-        borderPane.setBottom(back);
-        borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
+        //borderPane.setBottom(back);
+        //borderPane.setAlignment(back, Pos.BOTTOM_RIGHT);
         myScene.setRoot(borderPane);
         myScene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
 
@@ -320,13 +308,16 @@ public class GameCreator {
     }
 
     public void updateCategories() {
-        for (GameHboxContent gameHboxContent : choiceOfGameContent.values())
+        for (GameHboxContent gameHboxContent : choiceOfGameContent.values()) {
             gameHboxContent.hboxContentUpdate();
+        }
     }
 
     public Scene getScene() {
         return myScene;
     }
+
+    public BorderPane getBorder() {return borderPane;}
 }
 
 

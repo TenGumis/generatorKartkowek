@@ -29,7 +29,7 @@ public class CreatingNewDatabaseScene {
     int row = 2;
     List<GamePair> textFields = new ArrayList<>();
 
-    CreatingNewDatabaseScene(Stage window1,MainDatabase mainDatabase) {
+    CreatingNewDatabaseScene(GameCreator gameCreator,Stage window1,MainDatabase mainDatabase) {
 
         Stage window = new Stage();
         window.setTitle("Creating new database");
@@ -83,7 +83,6 @@ public class CreatingNewDatabaseScene {
                 }
                 Path file = Paths.get("src" + System.getProperty("file.separator") + "databases" +
                         System.getProperty("file.separator") + mainDatabase.getSize() + ".txt");
-                if (!Files.exists(file)) {
                     try {
                         Files.write(file, writeLines, Charset.defaultCharset());
 
@@ -92,7 +91,7 @@ public class CreatingNewDatabaseScene {
                         Files.write(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"), (databaseName.getText() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
 
                         mainDatabase.insert(databaseName.getText());
-
+                        gameCreator.updateCategories();
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("Database created");
                         alert.setContentText("Database created successfully.");
@@ -101,18 +100,6 @@ public class CreatingNewDatabaseScene {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText("Error during creating new database");
-                    alert.setContentText("The database already exists! Please change the name");
-                    alert.showAndWait();
-                    /**
-                     * TO DO
-                     * REFACTOR TO OTHER METHOD
-                     * MOVE THIS ALERT TO NewDatabaseScene class
-                     */
-                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -138,7 +125,7 @@ public class CreatingNewDatabaseScene {
 
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setPrefHeight(800);
+        scrollPane.setPrefHeight(650);
         scrollPane.setPrefWidth(500);
         scrollPane.setContent(grid);
         scrollPane.setFitToWidth(true);

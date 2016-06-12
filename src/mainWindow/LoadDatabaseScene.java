@@ -21,7 +21,7 @@ public class LoadDatabaseScene {
     private File selectedFile=null;
     private Stage loadDatabaseStage =null;
 
-    public LoadDatabaseScene(Stage window1,MainDatabase mainDatabase){
+    public LoadDatabaseScene(GameCreator gameCreator,Stage window1, MainDatabase mainDatabase){
         loadDatabaseStage =new Stage();
         loadDatabaseStage.setTitle("Load database");
         loadDatabaseStage.initModality(Modality.WINDOW_MODAL);
@@ -62,7 +62,7 @@ public class LoadDatabaseScene {
                         Files.write(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"), (databaseName.getText() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
 
                         System.out.println("Loaded: " + databaseName.getText());
-
+                        gameCreator.updateCategories();
                         loadDatabaseStage.close();
 
                     } catch (IOException e1) {

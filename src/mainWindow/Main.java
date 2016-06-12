@@ -16,7 +16,7 @@ public class Main extends Application {
 
     public static int sceneWidth=1280,sceneHeight=720;
     private Stage window,aboutStage=null;
-    private Scene mainMenuScene,loadDatabaseScene,newDatabaseScene,testScene;
+    private Scene mainMenuScene;
     private GameCreator gameCreation;
     private Stack<Scene> sceneStack=new Stack<>();
     private MainDatabase mainDatabase=null;
@@ -26,11 +26,8 @@ public class Main extends Application {
         databaseInitialization();
 
         window=primaryStage;
-        testScene=new TestScene(window,sceneStack).getScene();
         gameCreation = new GameCreator(window, sceneStack, mainDatabase);
 
-
-        //Menu Bar initialization
         MenuBar menuBar=new MenuBar();
         Menu file=new Menu("File");
         MenuItem newDatabase=new MenuItem("New database");
@@ -57,11 +54,11 @@ public class Main extends Application {
         });
 
         loadDatabase.setOnAction(e->{
-            new LoadDatabaseScene(window,mainDatabase);
+            new LoadDatabaseScene(gameCreation,window,mainDatabase);
         });
 
         newDatabase.setOnAction(e->{
-            new CreatingNewDatabaseScene(window,mainDatabase);
+            new CreatingNewDatabaseScene(gameCreation,window,mainDatabase);
         });
 
         BorderPane mainMenuLayout=new BorderPane();
@@ -79,7 +76,7 @@ public class Main extends Application {
         menuButtons.getChildren().addAll(startTestButton);
         menuButtons.setAlignment(Pos.CENTER);
         menuButtons.setSpacing(20);
-        mainMenuLayout.setCenter(menuButtons);
+        mainMenuLayout.setCenter(gameCreation.getBorder());
         mainMenuLayout.setTop(menuBar);
 
         mainMenuScene=new Scene(mainMenuLayout,sceneWidth,sceneHeight);
