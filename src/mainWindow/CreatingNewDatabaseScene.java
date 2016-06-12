@@ -3,20 +3,16 @@ package mainWindow;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import sun.font.TextLabel;
 
-import javax.swing.text.View;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -30,17 +26,15 @@ import java.util.*;
 public class CreatingNewDatabaseScene {
     final int DEFAULT_NUMBER_OF_COMPONENTS = 10;
     int gridSize = DEFAULT_NUMBER_OF_COMPONENTS;
-    int row = 0;
+    int row = 2;
     List<GamePair> textFields = new ArrayList<>();
 
-    CreatingNewDatabaseScene(Stack<Scene> stackScene, String databaseName) {
-        BorderPane newDatabaseLayout = new BorderPane();
-        VBox newDatabasePanel = new VBox();
-
+    CreatingNewDatabaseScene(Stage window1,MainDatabase mainDatabase) {
 
         Stage window = new Stage();
-        window.setTitle("New database:  " + databaseName);
+        window.setTitle("Creating new database");
         window.initModality(Modality.APPLICATION_MODAL);
+        window.initOwner(window1);
 
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10, 10, 10, 10));
@@ -53,6 +47,11 @@ public class CreatingNewDatabaseScene {
         for (int i = 0; i < gridSize; i++) {
             row = addFields(grid, row);
         }
+        TextField databaseName=new TextField();
+        databaseName.setPromptText("Set your database name:");
+        databaseName.setAlignment(Pos.CENTER);
+        Label label=new Label("Let's fill your database:");
+        label.setAlignment(Pos.CENTER);
         Button addFieldsButton = new Button("Add fields");
         Button submit = new Button("Submit");
         Button back = new Button("Back");
@@ -64,50 +63,63 @@ public class CreatingNewDatabaseScene {
             GridPane.setConstraints(back, 0, row+3, 2, 1);
             row++;
         });
+        GridPane.setConstraints(databaseName, 0,0, 2, 1);
+        GridPane.setHalignment(databaseName, HPos.CENTER);
+        GridPane.setConstraints(label, 0,1, 2, 1);
+        GridPane.setHalignment(label, HPos.CENTER);
         GridPane.setConstraints(addFieldsButton, 0, row+1, 2, 1);
         GridPane.setHalignment(addFieldsButton, HPos.CENTER);
-        grid.getChildren().add(addFieldsButton);
+        grid.getChildren().addAll(label,databaseName,addFieldsButton);
 
 
         // grid.getChildren().remove(submit);
         submit.setOnAction(event -> {
-            ArrayList<String> writeLines = new ArrayList<>();
-            writeLines.add(databaseName);
-            for(GamePair pair : textFields) {
-                if(pair.t1.getText().length() > 0 && pair.t2.getText().length() > 0)
-                    writeLines.add(pair.t1.getText() + ":" + pair.t2.getText());
-            }
-            Path file = Paths.get("src" + System.getProperty("file.separator") + "databases" +
-                    System.getProperty("file.separator") + databaseName + ".txt");
-            if(!Files.exists(file)) {
-                try {
-                    Files.write(file,writeLines, Charset.defaultCharset());
+            if(!databaseName.getText().equals("") && !mainDatabase.contain(databaseName.getText())) {
+                ArrayList<String> writeLines = new ArrayList<>();
+                writeLines.add(databaseName.getText());
+                for (GamePair pair : textFields) {
+                    if (pair.t1.getText().length() > 0 && pair.t2.getText().length() > 0)
+                        writeLines.add(pair.t1.getText() + ":" + pair.t2.getText());
+                }
+                Path file = Paths.get("src" + System.getProperty("file.separator") + "databases" +
+                        System.getProperty("file.separator") + mainDatabase.getSize() + ".txt");
+                if (!Files.exists(file)) {
+                    try {
+                        Files.write(file, writeLines, Charset.defaultCharset());
 
-                    if(!Files.exists(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt")))
-                        Files.createFile(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
-                    Files.write(Paths.get("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"), (databaseName+System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
+                        if (!Files.exists(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt")))
+                            Files.createFile(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"));
+                        Files.write(Paths.get("src" + File.separator + "databases" + File.separator + "importedDatabases.txt"), (databaseName.getText() + System.lineSeparator()).getBytes(), StandardOpenOption.APPEND);
 
-                    // dodawanie do hashmapy
+                        mainDatabase.insert(databaseName.getText());
 
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Database created");
-                    alert.setContentText("Database created successfully.");
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Database created");
+                        alert.setContentText("Database created successfully.");
+                        alert.showAndWait();
+                        window.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Error during creating new database");
+                    alert.setContentText("The database already exists! Please change the name");
                     alert.showAndWait();
-                    window.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    /**
+                     * TO DO
+                     * REFACTOR TO OTHER METHOD
+                     * MOVE THIS ALERT TO NewDatabaseScene class
+                     */
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error during creating new database");
                 alert.setContentText("The database already exists! Please change the name");
+                if(databaseName.getText().equals("")) alert.setContentText("Category name format is wrong!");
                 alert.showAndWait();
-                /**
-                 * TO DO
-                 * REFACTOR TO OTHER METHOD
-                 * MOVE THIS ALERT TO NewDatabaseScene class
-                 */
             }
 
         });
@@ -126,10 +138,10 @@ public class CreatingNewDatabaseScene {
 
         ScrollPane scrollPane = new ScrollPane();
         VBox.setVgrow(scrollPane, Priority.ALWAYS);
-        scrollPane.setPrefHeight(500);
+        scrollPane.setPrefHeight(800);
         scrollPane.setPrefWidth(500);
         scrollPane.setContent(grid);
-        //scrollPane.setFitToWidth(true);
+        scrollPane.setFitToWidth(true);
 
         Scene scene = new Scene(scrollPane);
         scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"newDatabaseStyleScheet.css").toExternalForm());

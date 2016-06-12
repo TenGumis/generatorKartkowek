@@ -17,15 +17,19 @@
     -fx-border: 1px;
 }
 
+.scroll-pane{
+    -fx-top: 20;
+}
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
+    -fx-alignment: center;
 }
 
 .label{
     -fx-text-fill: #4CAF50;
     -fx-font-family: "Myanmar Text";
-    -fx-font-weight: bold;
-    -fx-font-size: 20px;
+    -fx-font-size: 14px;
 }
 
 .button:hover {

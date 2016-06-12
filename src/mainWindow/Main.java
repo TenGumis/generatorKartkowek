@@ -26,7 +26,6 @@ public class Main extends Application {
         databaseInitialization();
 
         window=primaryStage;
-        newDatabaseScene=new NewDatabaseScene(window,sceneStack).getScene();
         testScene=new TestScene(window,sceneStack).getScene();
         gameCreation = new GameCreator(window, sceneStack, mainDatabase);
 
@@ -61,15 +60,13 @@ public class Main extends Application {
             new LoadDatabaseScene(window,mainDatabase);
         });
 
+        newDatabase.setOnAction(e->{
+            new CreatingNewDatabaseScene(window,mainDatabase);
+        });
+
         BorderPane mainMenuLayout=new BorderPane();
         VBox menuButtons=new VBox();
 
-        Button newDatabaseButton=new Button("New Database");
-        newDatabaseButton.setOnAction(e-> {
-            sceneStack.push(newDatabaseScene);
-            window.setScene(newDatabaseScene);
-        });
-        //newDatabaseButton.setMaxWidth(130);
 
         Button startTestButton=new Button("Make a Test");
         startTestButton.setOnAction(e-> {
@@ -79,7 +76,7 @@ public class Main extends Application {
         });
 
 
-        menuButtons.getChildren().addAll(newDatabaseButton,startTestButton);
+        menuButtons.getChildren().addAll(startTestButton);
         menuButtons.setAlignment(Pos.CENTER);
         menuButtons.setSpacing(20);
         mainMenuLayout.setCenter(menuButtons);
@@ -104,9 +101,12 @@ public class Main extends Application {
                     new FileReader("src"+ File.separator+"databases"+ File.separator+"importedDatabases.txt"));
             String line = br.readLine();
             while (line != null) {
-                System.out.println(line+" loaded");
-                System.out.println("|"+line+"|");
-                mainDatabase.insert(line);
+                if(line.length()==1 && (int)line.charAt(0)==65279) line="";
+                if(line.length()>0) {
+                    System.out.println(line + " loaded");
+                    System.out.println("|" + line + "|");
+                    mainDatabase.insert(line);
+                }
                 line = br.readLine();
             }
         } catch (IOException e){
