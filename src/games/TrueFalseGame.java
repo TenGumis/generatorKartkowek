@@ -9,6 +9,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
+import mainWindow.Main;
 import mainWindow.MainDatabase;
 
 import java.io.File;
@@ -108,8 +109,8 @@ public class TrueFalseGame implements Game {
             // ScrollPane
             ScrollPane scrollPane = new ScrollPane();
             VBox.setVgrow(scrollPane, Priority.ALWAYS);
-            scrollPane.setPrefHeight(400);
-            scrollPane.setPrefWidth(400);
+            scrollPane.setPrefHeight(Main.sceneHeight);
+            scrollPane.setPrefWidth(Main.sceneWidth);
             scrollPane.setContent(grid);
             scrollPane.setFitToWidth(true);
 
