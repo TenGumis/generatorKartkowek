@@ -24,7 +24,6 @@ public class GameCreator {
     private Stage window;
     private VBox layout = new VBox();
     private Scene myScene = new Scene(layout, Main.sceneWidth, Main.sceneHeight);
-    private GridPane grid;
     private MainDatabase db;
     private static Map<String, Game> availableGames = new HashMap<>();
     private Map<String, GameHboxContent> choiceOfGameContent = new HashMap<>();
@@ -103,7 +102,7 @@ public class GameCreator {
                     try {
                         nextGames.push(availableGames.get(s).play(
                                 new Integer(choiceOfGameContent.get(s).numberOfWords.getText()), categoriesToPlay, db));
-                    } catch (Exception e) {      }
+                    } catch (Exception e) {  }
                 }
             }
             succesFullCreation = InputValidation.validate(() -> {return !gamesCurrentlyUsed.isEmpty();},
@@ -132,12 +131,20 @@ public class GameCreator {
                         AnchorPane.setTopAnchor(current.getRoot(), 0.1);
                         AnchorPane.setLeftAnchor(current.getRoot(), 0.1);
                         AnchorPane.setRightAnchor(current.getRoot(), 0.1);
-                        anchor.getChildren().add(current.getRoot());
+                    anchor.getChildren().add(current.getRoot());
                     Button next = new Button("Next"), prev = new Button("Previous");
                     AnchorPane.setBottomAnchor(next, 5.0);
                     AnchorPane.setRightAnchor(next, 20.0);
                     AnchorPane.setBottomAnchor(prev, 5.0);
                     AnchorPane.setLeftAnchor(prev, 5.0);
+
+                    Button quit = new Button("Quit");
+
+
+                    quit.setOnAction(event1 -> window.setScene(stackScene.peek()));
+                        AnchorPane.setRightAnchor(quit, 20.0);
+                        AnchorPane.setTopAnchor(quit, 5.0);
+                    anchor.getChildren().add(quit);
 
                     next.setOnAction(event1 -> {
                         previousGames.push(nextGames.peek());
@@ -177,48 +184,84 @@ public class GameCreator {
                         });
                         ((AnchorPane)scene.getRoot()).getChildren().add(back);
                     }
-                    int result=0, wordsQuantity=0;
-                    for (Game game : gamesCurrentlyUsed) {
-                        result+= game.score();
-                        wordsQuantity+= game.getWordsQuantity();
-                    }
-
-                    // Grade calculated in percents
-                    double grade = (double)result / (double)wordsQuantity;
 
 
                     Stage resultWindow = new Stage();
 
-                    // Result image
-                    ImageView resultIcon;
-                    if (grade>0.75)
-                        resultIcon = new ImageView(new Image(GameCreator.class.getResourceAsStream("smallok.png")));
-                    else
-                        resultIcon = new ImageView(new Image(GameCreator.class.getResourceAsStream("smallnotok.png")));
+                    // Grid to put it together with the back button
+                    GridPane grid = new GridPane();
+                    grid.setPadding(new Insets(10, 10, 10, 10));
+                    grid.setVgap(10);
 
-                    // Result Label
-                    Label resultLabel = new Label(""+result +"/"+wordsQuantity);
-                    resultLabel.setStyle("-fx-text-fill: darkcyan; -fx-font-size: 25");
+                    int result=0, wordsQuantity=0;
+                    int row=0;
+                    //if (gamesCurrentlyUsed.size()>1)
+                        for (Game game : gamesCurrentlyUsed) {
+                            String name="";
+                            for (String s : availableGames.keySet())
+                                if (availableGames.get(s).equals(game))
+                                    name=s;
+                            result+= game.score();
+                            wordsQuantity+= game.getWordsQuantity();
+
+                            // Description Label
+                            Label descriptionLabel = new Label(name + ": ");
+                            descriptionLabel.setStyle("-fx-font-size: 25; -fx-text-fill: blueviolet");
+                            GridPane.setConstraints(descriptionLabel, 0, row);
+                            GridPane.setHalignment(descriptionLabel, HPos.CENTER);
+
+                            //Game Score
+                            Label scoreLabel = new Label(""+ game.score() + " / " + game.getWordsQuantity());
+                            scoreLabel.setStyle("-fx-font-size: 25; -fx-text-fill: #8d87ff");
+                            GridPane.setConstraints(scoreLabel, 1, row++);
+                            GridPane.setHalignment(scoreLabel, HPos.CENTER);
+
+                            grid.getChildren().addAll(descriptionLabel, scoreLabel);
+                        }
+                    row+=2;
+
+                    // Overall Label
+                    Label overall = new Label("Overall: ");
+                    overall.setStyle("-fx-font-size: 30; -fx-text-fill: red");
+                    GridPane.setConstraints(overall, 0, row++, 2, 1);
+                    GridPane.setHalignment(overall, HPos.CENTER);
+
+                    //Overall Score
+                    Label overallScoreLabel = new Label(""+result+ " / " + wordsQuantity);
+                    overallScoreLabel.setStyle("-fx-font-size: 30; -fx-text-fill: red");
+
+                    // Image
+                    ImageView imageView = new ImageView();
+                    Image image = null;
+                    double grade = (double)result / (double) wordsQuantity;
+
+                    if (grade>0.75) {
+                        image = new Image(GameCreator.class.getResourceAsStream("smallok.png"));
+                    }
+                    else
+                        image = new Image(GameCreator.class.getResourceAsStream("smallok.png"));
+
+                    imageView.setImage(image);
+
+                    // Hbox
+                    HBox hBox = new HBox(30);
+                    hBox.setAlignment(Pos.CENTER);
+                    GridPane.setConstraints(hBox, 0, row++, 2, 1);
+                    GridPane.setHalignment(hBox, HPos.CENTER);
+                    hBox.getChildren().addAll(overallScoreLabel, imageView);
 
                     // Back button
                     Button back = new Button("OK...");
                     back.setAlignment(Pos.CENTER);
                     back.setOnAction(e -> resultWindow.close());
+                    GridPane.setConstraints(back, 0, ++row, 2, 1);
+                    GridPane.setHalignment(back, HPos.CENTER);
+                    back.setMinHeight(30); back.setMinWidth(100);
 
-                    // Hbox for Label with image
-                    HBox hBox = new HBox(20);
-                    hBox.getChildren().addAll(resultIcon, resultLabel);
-                    hBox.setAlignment(Pos.CENTER);
-
-                    // Vbox to put it together with the back button
-                    VBox vBox = new VBox(20);
-                    vBox.setPadding(new Insets(10, 10, 10, 10));
-                    vBox.setAlignment(Pos.CENTER);
-                    vBox.getChildren().addAll(hBox, back);
-
+                    grid.getChildren().addAll(overall, hBox, back);
                     resultWindow.setTitle("Result");
                     resultWindow.initModality(Modality.APPLICATION_MODAL);
-                    resultWindow.setScene(new Scene(vBox));
+                    resultWindow.setScene(new Scene(grid));
                     resultWindow.showAndWait();
                 });
                 AnchorPane.setRightAnchor(submit, 20.0);
@@ -250,7 +293,6 @@ public class GameCreator {
         stackScene.push(myScene);
         window.setScene(myScene);
     }
-
 
 
     static class GameHboxContent {
@@ -295,6 +337,8 @@ public class GameCreator {
         }
 
         void hboxContentUpdate() {
+            if (checkBox.isSelected())
+                checkBox.fire();
             categories = makeCategoriesMenu(db);
         }
     }
