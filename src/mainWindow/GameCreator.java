@@ -190,7 +190,7 @@ public class GameCreator {
 
                     // Grid to put it together with the back button
                     GridPane grid = new GridPane();
-                    grid.setPadding(new Insets(10, 10, 10, 10));
+                    grid.setPadding(new Insets(50, 50, 50, 50));
                     grid.setVgap(10);
 
                     int result=0, wordsQuantity=0;
@@ -257,6 +257,7 @@ public class GameCreator {
                     GridPane.setConstraints(back, 0, ++row, 2, 1);
                     GridPane.setHalignment(back, HPos.CENTER);
                     back.setMinHeight(30); back.setMinWidth(100);
+                    grid.setAlignment(Pos.CENTER);
 
                     grid.getChildren().addAll(overall, hBox, back);
                     resultWindow.setTitle("Result");
