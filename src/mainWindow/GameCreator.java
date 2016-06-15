@@ -1,6 +1,7 @@
 package mainWindow;
 
 import games.BasicGame;
+import games.DragAndDropGame;
 import games.Game;
 import games.TrueFalseGame;
 import javafx.geometry.HPos;
@@ -36,6 +37,7 @@ public class GameCreator {
         availableGames.put("Tralala", new BasicGame());
         availableGames.put("Bumschakalaka", new BasicGame());
         availableGames.put("True or False",new TrueFalseGame());
+        availableGames.put("Drag and Drop",new DragAndDropGame());
     }
 
     public GameCreator(Stage window, Stack<Scene> stackScene, MainDatabase db) {
@@ -81,10 +83,7 @@ public class GameCreator {
                             categoriesToPlay.add(checkMenuItem.getText());
                     }
                     succesFullCreation = InputValidation.validate(() -> {
-                        if (categoriesToPlay.isEmpty())
-                            return false;
-                        else
-                            return true;
+                        return !categoriesToPlay.isEmpty();
                     }, "At least one category for each selected game must be chosen.");
                     if (!succesFullCreation)
                         return;
@@ -102,7 +101,7 @@ public class GameCreator {
                     try {
                         nextGames.push(availableGames.get(s).play(
                                 new Integer(choiceOfGameContent.get(s).numberOfWords.getText()), categoriesToPlay, db));
-                    } catch (Exception e) {  }
+                    } catch (Exception ignored) {  }
                 }
             }
             succesFullCreation = InputValidation.validate(() -> {return !gamesCurrentlyUsed.isEmpty();},
