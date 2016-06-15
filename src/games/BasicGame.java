@@ -1,33 +1,21 @@
 package games;
 
-import games.Game;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import mainWindow.MainDatabase;
 
-import java.awt.*;
 import java.io.File;
 import java.util.*;
-import java.util.List;
 
 /**
  * Created by filip on 5/21/16.
@@ -97,6 +85,7 @@ public class BasicGame implements Game {
         scrollPane.setPrefWidth(1280);
         scrollPane.setContent(grid);
         scrollPane.setFitToWidth(true);
+
 
         // Scene
         Scene scene = new Scene(scrollPane);
