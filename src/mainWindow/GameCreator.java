@@ -262,6 +262,9 @@ public class GameCreator {
                     grid.setAlignment(Pos.CENTER);
 
                     grid.getChildren().addAll(overall, hBox, back);
+                    grid.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+
+                            File.separator+"gameStyleScheet.css").toExternalForm());
+
                     resultWindow.setTitle("Result");
                     resultWindow.initModality(Modality.APPLICATION_MODAL);
                     resultWindow.setScene(new Scene(grid));
