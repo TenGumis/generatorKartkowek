@@ -116,7 +116,7 @@ public class TrueFalseGame implements Game {
 
             // Scene
             Scene scene = new Scene(scrollPane);
-            scene.getStylesheets().add(getClass().getResource(".." + File.separator + "styleScheets" + File.separator + "trueFalseStyleScheet.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource(".." + File.separator + "styleScheets" + File.separator + "TrueFalseStyleScheet.css").toExternalForm());
 
             return scene;
 

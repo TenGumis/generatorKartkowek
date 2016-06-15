@@ -35,6 +35,10 @@ public class DragAndDropGame implements Game {
 
 
     public DragAndDropGame() {
+
+    }
+
+    public Scene play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
         pane = new Pane();
         pane.setPadding(new Insets(10, 10, 10, 10));
         pane.setPrefWidth(1270);
@@ -48,9 +52,8 @@ public class DragAndDropGame implements Game {
 
         scene = new Scene(scrollPane);
         scene.getStylesheets().add(getClass().getResource(".."+ File.separator+"styleScheets"+File.separator+"gameStyleScheet.css").toExternalForm());
-    }
 
-    public Scene play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
+
         this.wordsQuantity = wordsQuantity;
 
         gameItems = new ArrayList<>();
