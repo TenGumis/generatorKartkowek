@@ -83,7 +83,10 @@ public class GameCreator {
                             categoriesToPlay.add(checkMenuItem.getText());
                     }
                     succesFullCreation = InputValidation.validate(() -> {
-                        return !categoriesToPlay.isEmpty();
+                        if (categoriesToPlay.isEmpty())
+                            return false;
+                        else
+                            return true;
                     }, "At least one category for each selected game must be chosen.");
                     if (!succesFullCreation)
                         return;
@@ -101,7 +104,7 @@ public class GameCreator {
                     try {
                         nextGames.push(availableGames.get(s).play(
                                 new Integer(choiceOfGameContent.get(s).numberOfWords.getText()), categoriesToPlay, db));
-                    } catch (Exception ignored) {  }
+                    } catch (Exception e) {  }
                 }
             }
             succesFullCreation = InputValidation.validate(() -> {return !gamesCurrentlyUsed.isEmpty();},
