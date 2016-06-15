@@ -9,21 +9,27 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Pair;
 import mainWindow.MainDatabase;
 
 import java.io.File;
 import java.util.*;
 
+
+
 public class DragAndDropGame implements Game {
     private int wordsQuantity;
-    private Map<String, String> gameContent;
-    private Map<String, String> testComponets;
     private List<GameItem> gameItems;
     private List<Node> nodes;
     private Pane pane;
     private ScrollPane scrollPane;
     private Scene scene;
+    private int score;
+    private int visibles;
+
+    private Media sound = new Media(new File("src"+File.separator+"img"+File.separator+"mario_coin.mp3").toURI().toString());
 
     private double orgSceneX, orgSceneY;
 
@@ -46,43 +52,48 @@ public class DragAndDropGame implements Game {
 
     public Scene play(int wordsQuantity, List<String> categories, MainDatabase db) throws Exception {
         this.wordsQuantity = wordsQuantity;
-        gameContent = new HashMap<>();
 
         gameItems = new ArrayList<>();
         nodes = new ArrayList<>();
 
-        List<Pair<String , String> > pairsFromDB = new ArrayList<>();
+        Collection<Pair<String , String> > pairsFromDB = new HashSet<>();
         int numberOfCategories = categories.size();
         int k=1;
         for (String s : categories) {
             for (Pair<String, String> pair :
-                    db.getSetOfElements(s, (k*wordsQuantity)/numberOfCategories-((k-1)*wordsQuantity)/numberOfCategories))
+                    db.getSetOfElements(s, (k*wordsQuantity)/numberOfCategories-((k-1)*wordsQuantity)/numberOfCategories)) {
                 pairsFromDB.add(pair);
+            }
             k++;
         }
 
-
+        score = 0;
+        visibles = 0;
         for(Pair<String, String> pair : pairsFromDB) {
-            Pair<GameItem,GameItem> gameItemPair = getPairGameItems(pair.getKey(),pair.getValue());
-            gameItems.add(gameItemPair.getKey());
-            gameItems.add(gameItemPair.getValue());
-            nodes.add(gameItemPair.getKey().getNode());
-            nodes.add(gameItemPair.getValue().getNode());
-        }
-        for(Node node : nodes) {
-            pane.getChildren().add(node);
+            GameItem g1 = new GameItem(pair.getKey());
+            gameItems.add(g1);
+            nodes.add(g1.getNode());
+            pane.getChildren().add(g1.getNode());
+
+            GameItem g2 = new GameItem(pair.getValue());
+            gameItems.add(g2);
+            nodes.add(g2.getNode());
+            pane.getChildren().add(g2.getNode());
+
+            g1.setFriend(g2);
+            g2.setFriend(g1);
+            visibles++;
         }
         return scene;
     }
 
 
     public int score() {
-        int result=0;
-        return result;
+        return score;
     }
 
     public int getWordsQuantity() {
-        return wordsQuantity;
+        return gameItems.size()/2;
     }
 
     public Scene getScene() {
@@ -92,8 +103,10 @@ public class DragAndDropGame implements Game {
     class GameItem {
         private Label label;
         private GameItem friend;
+        private boolean visible = true;
         GameItem(String s) {
             label = new Label(s);
+            label.setStyle("-fx-font-size: 16pt");
             setNextRandomPosition();
             setDraggedAndDropped();
         }
@@ -106,33 +119,17 @@ public class DragAndDropGame implements Game {
             this.friend = friend;
         }
 
-        private class Position {
-            private double x;
-            private double y;
-            public Position(double x, double y) {
-                this.x = x;
-                this.y = y;
-            }
-            public double getX() {
-                return x;
-            }
-            public double getY() {
-                return y;
-            }
-        }
-
         void setNextRandomPosition() {
             /***
-             * it should be changed to size from Pane or Scene
+             * it should be changed to size which is got from Pane or Scene
              */
-            double minX=10, minY=10, maxX=1270, maxY=710;
+            double minX=0, minY=0, maxX=1240, maxY=660;
 
             Random random = new Random();
             do {
                 label.setLayoutX(random.nextDouble()*(maxX-minX)+minX);
                 label.setLayoutY(random.nextDouble()*(maxY-minY)+minY);
-            }
-            while(checkBounds(label));
+            } while(checkBounds(label));
         }
 
         public void setDraggedAndDropped() {
@@ -160,30 +157,35 @@ public class DragAndDropGame implements Game {
             });
 
             label.setOnMouseReleased((t) -> {
-                if (label.getBoundsInParent().intersects(friend.getNode().getBoundsInParent()))
+                if (label.getBoundsInParent().intersects(friend.getNode().getBoundsInParent())
+                        && this.visible && friend.visible)
                     addPoint(this, friend);
             });
         }
     }
 
-    Pair<GameItem,GameItem> getPairGameItems(String s1, String s2) {
-        GameItem g1 = new GameItem(s1);
-        GameItem g2 = new GameItem(s2);
-        g1.setFriend(g2);
-        g2.setFriend(g1);
-        return new Pair<>(g1,g2);
-    }
-
     private void addPoint(GameItem me, GameItem friend) {
-        System.out.println("ok");
+        me.getNode().setVisible(false);
+        friend.getNode().setVisible(false);
+        me.visible = false;
+        friend.visible = false;
+        score++;
+        visibles--;
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
+
+        if(visibles == 0) {
+            // end of game
+        }
+
     }
 
 
     private boolean checkBounds(Node block) {
         boolean collisionDetected = false;
-        for (Node static_bloc : nodes) {
-            if (static_bloc != block) {
-                if (block.getBoundsInParent().intersects(static_bloc.getBoundsInParent())) {
+        for (Node static_block : nodes) {
+            if (static_block != block) {
+                if (block.getBoundsInParent().intersects(static_block.getBoundsInParent())) {
                     collisionDetected = true;
                 }
             }
